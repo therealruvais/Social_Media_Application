@@ -1,0 +1,49 @@
+.searchC {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.Sinput {
+  flex: 0.5;
+  border-bottom: 1px solid #9999;
+}
+.Soutput {
+  flex: 2;
+  margin-top: 15px;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inputS {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  background-color: var(--color-light);
+  padding: 4px;
+  width: 90%;
+  margin-left: 15px;
+  border-radius: 24px;
+}
+
+.searchI {
+  width: 80%;
+  height: 26px;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.Simg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.searchLink{
+  text-decoration: none;
+  color: var(--color-dark);
+}

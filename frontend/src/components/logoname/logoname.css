@@ -1,0 +1,21 @@
+.LogoName {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  background-color: var(--color-light);
+  border-radius: 18px;
+  width: 100%;
+}
+.LogoName > div > img {
+  margin-top: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+.switchAc{
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  color: var(--color-blue);
+}

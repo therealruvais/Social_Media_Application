@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  overflow-x: hidden;
+}
+:root {
+  --color-dark: hsl(252, 30%, 17%);
+  --color-light: hsl(252, 30%, 95%);
+  --color-gray: hsl(252, 15%, 65%);
+  --color-primary: hsl(252, 75%, 60%);
+  --color-secondary: hsl(0, 0%, 100%);
+  --color-success: hsl(120, 95%, 65%);
+  --color-danger: hsl(0, 95%, 65%);
+  --color-black: hsl(252, 30%, 10%);
+  --color-blue:hsl(204, 100%, 45%);
+}
+.App {
+  position: relative;
+  inset: 0;
+  color: var(--color-black);
+  background-color: var(--color-secondary);
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  gap: 1rem;
+}
+
+.spinner-container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

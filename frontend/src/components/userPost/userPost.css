@@ -1,0 +1,22 @@
+.editPostC {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.editImgC {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.editImg {
+  width: 33%;
+  max-height: 21rem;
+  border: 1px solid #9999;
+  object-fit: cover;
+}
