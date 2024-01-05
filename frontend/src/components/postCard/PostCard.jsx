@@ -60,7 +60,12 @@ const PostCard = ({ username }) => {
         </p>
       </nav>
       <div className="postcContainer">
-        <UserPost userPostData={userPostData} />
+        {userPostData.map((data) => (
+          <UserPost
+            key={data._id}
+            data={data}
+          />
+        ))}
       </div>
     </div>
   );

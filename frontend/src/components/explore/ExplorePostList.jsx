@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import post1 from "../../socialmedia/avatar/avatar8.jpg";
 import { FaHeart, FaComment } from "react-icons/fa";
 import PostModel from "./postModel";
 

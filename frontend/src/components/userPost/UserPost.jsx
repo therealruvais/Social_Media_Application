@@ -1,21 +1,56 @@
-import React from "react";
-import './userPost.css'
-import post from '../../socialmedia/post20.jpg'
+import React, { useContext, useEffect, useState } from "react";
+import "../postCard/postCard.css";
+import PostEditModal from "./PostEditModal";
 
-const UserPost = ({ userPostData }) => {
+import axios from "axios";
+axios.defaults.withCredentials = true;
+
+const UserPost = ({ data }) => {
+  const [openPostModal, setOpenPostModal] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [postId, setPostId] = useState(null);
+
+  const user = async () => {
+    const { data } = await axios
+      .get(`http://localhost:1900/api/user/verify`, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    setUserData(data.getaUser);
+    return data.getaUser;
+  };
+
+  useEffect(() => {
+    user();
+  }, []);
+
+
+  const handleImageClick = (postId) => {
+    setPostId(postId); 
+    setOpenPostModal(true);
+  };
+
   return (
-    <div className="editPostC">
+    <>
       <div className="editImgC">
-        {userPostData.map((data) => (
-          <img
-            className="editImg"
-            src={data.image}
-            alt=""
-            key={data._id}
-            />
-        ))}
+        <img
+          className="editImg"
+          style={{ cursor: "pointer" }}
+          src={data.image}
+          alt=""
+          onClick={() => handleImageClick(data._id)}
+        />
       </div>
-    </div>
+
+      {userData?._id == data?.owner?._id ? (
+        <PostEditModal
+          data={data}
+          openPostModal={openPostModal}
+          setOpenPostModal={setOpenPostModal}
+          postId={postId}
+        />
+      ) : undefined}
+    </>
   );
 };
 

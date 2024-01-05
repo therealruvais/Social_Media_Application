@@ -1,7 +1,6 @@
 .postC {
   width: 100%;
   height: 40vh;
-  /* background-color: aquamarine; */
 }
 
 nav {
@@ -22,4 +21,22 @@ nav {
 .navLink.active {
   color: var(--color-blue);
   /* border-top: 1px solid var(--color-blue); */
+}
+
+.postcContainer{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.editImgC {
+width: 33%; 
+max-height: 21rem;
+border: 1px solid #9999;
+
+}
+
+.editImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

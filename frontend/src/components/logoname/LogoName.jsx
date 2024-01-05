@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./logoname.css";
-import { PacmanLoader } from "react-spinners";
+import {ClipLoader} from "react-spinners";
 import { UserDataContext } from "../../context/UserDataContext";
 
 
@@ -10,7 +10,7 @@ const LogoName = () => {
     // Show a spinner while userData is loading
     return (
       <div className="loading-spinner">
-        <PacmanLoader
+        <ClipLoader
           color="#36d7b7"
           size={15}
           loading={!userData}

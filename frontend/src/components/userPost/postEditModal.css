@@ -1,0 +1,112 @@
+.PostEditModal {
+  width: 50%;
+  height: 70vh;
+  margin: auto;
+  display: flex;
+  gap: 1rem;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  background-color: var(--color-secondary);
+  margin-top: 90px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: 1s ease-in-out;
+}
+.PostEditModal.active {
+  width: 25%;
+  height: 50vh;
+  margin: auto;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  background-color: var(--color-secondary);
+  margin-top: 90px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.postEditContainet {
+  width: 100%;
+  height: 100%;
+}
+
+.peditContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.leftC {
+  flex: 1;
+}
+
+.leftCHead {
+  width: 100%;
+  height: 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #9999;
+}
+.leftCImg {
+  width: 100%;
+  height: 94%;
+}
+.editpostMimg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.RightC {
+  flex: 1;
+}
+.rightCHead {
+  width: 100%;
+  height: 6%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-bottom: 1px solid #9999;
+}
+.rightInput {
+  width: 100%;
+  height: 94%;
+  margin-top: 10px;
+}
+.rightInput > textarea {
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.editC {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.editT {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.editD {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.editT > button {
+  width: 70%;
+  height: 40px;
+  font-size: 20px;
+}
+.editD > button {
+  width: 70%;
+  height: 40px;
+  font-size: 20px;
+}

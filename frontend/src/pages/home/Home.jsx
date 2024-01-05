@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import './home.css'
 import Post from '../../components/post/Post'
 import Followers from '../../components/followcard/Followers'
-import PostData from '../../data/PostData'
 import axios from 'axios'
 import { UserDataContext } from '../../context/UserDataContext'
 import { HashLoader } from "react-spinners";
-import { PostDataContext } from '../../context/PostContext'
 axios.defaults.withCredentials = true;
 
  
@@ -30,7 +28,6 @@ const Home = () => {
     const { data } = await axios.get(`http://localhost:1900/api/post/homepost`, {
       withCredentials:true,
     }).catch(err => console.log('error fetching post data', err))
-    console.log(data.posts)
     return data.posts;
   }
 
