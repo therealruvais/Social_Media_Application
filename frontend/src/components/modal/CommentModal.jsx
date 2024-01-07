@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa6";
 import { LuShare2 } from "react-icons/lu";
-import "./commentModel.css";
+import "./commentModal.css";
 const CommentModal = ({
   modalIsOpen,
   setModalIsOpen,
   item,
-  like,
-  likeToggle,
   getTimeDifference,
+  handlelikeClick,
+  hasLiked,
+  comments,
+  setComments,
 }) => {
+ 
+
   return (
     <>
       <Modal
@@ -42,7 +46,7 @@ const CommentModal = ({
                 <BsThreeDots />
               </div>
             </div>
-            
+
             <div className="commentModal">
               <div className="commentavtar">
                 <img
@@ -68,9 +72,9 @@ const CommentModal = ({
                 <div className="lscmodal">
                   <div
                     className="k"
-                    onClick={likeToggle}
+                    onClick={handlelikeClick}
                   >
-                    {like ? (
+                    {hasLiked ? (
                       <FaHeart style={{ color: "red" }} />
                     ) : (
                       <FaRegHeart />
@@ -90,8 +94,11 @@ const CommentModal = ({
                   className="inputModal"
                   type="text"
                   placeholder="Add a comment:)"
+                  name="comments"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
                 />
-                <p className="post-p">post</p>
+                {comments ? <p className="post-p">post</p> : ""}
               </div>
             </div>
           </div>

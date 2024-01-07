@@ -28,6 +28,7 @@ const Home = () => {
     const { data } = await axios.get(`http://localhost:1900/api/post/homepost`, {
       withCredentials:true,
     }).catch(err => console.log('error fetching post data', err))
+    setPostData(data.posts)
     return data.posts;
   }
 
@@ -44,8 +45,9 @@ user()
   }, [])
   
   useEffect(() => {
-   posts().then((data) => setPostData(data))
+   posts()
   }, [])
+
   
   
   if (loading) {
@@ -64,7 +66,11 @@ user()
     <div className="Homesec">
       <div className="postSec">
         {postData.map((data, id) => (
-          <Post item={data} key={id} />
+          <Post
+            item={data}
+            key={id}
+           posts={posts}
+          />
         ))}
       </div>
       <div className="rightSec">

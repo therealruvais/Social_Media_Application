@@ -5,7 +5,7 @@ import PostEditModal from "./PostEditModal";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const UserPost = ({ data }) => {
+const UserPost = ({ data, userPostdata }) => {
   const [openPostModal, setOpenPostModal] = useState(false);
   const [userData, setUserData] = useState(null);
   const [postId, setPostId] = useState(null);
@@ -24,9 +24,8 @@ const UserPost = ({ data }) => {
     user();
   }, []);
 
-
   const handleImageClick = (postId) => {
-    setPostId(postId); 
+    setPostId(postId);
     setOpenPostModal(true);
   };
 
@@ -48,6 +47,7 @@ const UserPost = ({ data }) => {
           openPostModal={openPostModal}
           setOpenPostModal={setOpenPostModal}
           postId={postId}
+          userPostdata={userPostdata}
         />
       ) : undefined}
     </>

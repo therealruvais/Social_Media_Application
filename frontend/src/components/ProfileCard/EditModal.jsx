@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const EditModal = ({ editModal, setEditModal, user }) => {
+const EditModal = ({ editModal, setEditModal, user, profile }) => {
   const [form, setForm] = useState({
     name: user.name,
     username: user.username,
@@ -25,14 +25,15 @@ const EditModal = ({ editModal, setEditModal, user }) => {
         website: form.website,
       })
       .catch((err) => console.log("something went wrong", err));
+    profile()
     return data;
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     try {
       await newUser();
-      setEditModal(false); 
+      setEditModal(false);
     } catch (error) {
       console.error("Error submitting form:", error);
     }

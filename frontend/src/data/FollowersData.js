@@ -7,9 +7,7 @@ import img6 from '../socialmedia/avatar/avatar2.jpg'
 
 export const FollowersData = [
     {name:"Tyler",username:"tylerdurden",img:img1},
-    {name:"Sofia",username:"limitless",img:img2},
     {name:"Katherine",username:"flyingace",img:img3},
     {name:"Lilly John",username:"lilly",img:img4},
-    {name:"Maxine",username:"max",img:img5},
     {name:"Zoya Singh",username:"zoya",img:img6}
 ]

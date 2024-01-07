@@ -67,20 +67,57 @@ const getUsersPost = async (req, res) => {
 
   res.json({ userPost });
 };
-
 const updatePost = async (req, res) => {
   const { id } = req.params;
-  const newPost = await Post.findByIdAndUpdate(id, {
-    desc: req?.body?.desc,
-  }, {
-    new:true
-  }).populate("owner")
+  const newPost = await Post.findByIdAndUpdate(
+    id,
+    {
+      desc: req?.body?.desc,
+    },
+    {
+      new: true,
+    }
+  ).populate("owner");
 
-  if (!newPost) throw new Error('cannot find post')
-  
-  res.json({newPost})
+  if (!newPost) throw new Error("cannot find post");
 
-}
+  res.json({ newPost });
+};
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+  const deletedPost = await Post.findByIdAndDelete(id);
+  if (!deletedPost) throw new Error("cannot find the Post");
+
+  res.json({ msg: "success", deletedPost });
+};
+const likeDislike = async (req, res) => {
+  const { id } = req.user;
+  const { postId } = req.params;
+
+  const user = await User.findById(id).select("-password");
+  const post = await Post.findById(postId);
+
+  if (!user || !post) {
+    return res.status(404).json({ error: "User or Post not found" });
+  }
+
+  const isLiked = post.likes.includes(user._id);
+  if (isLiked) {
+    let likedislike = await Post.findOneAndUpdate({
+      _id: post._id,
+    }, {
+      $pull:{likes:user._id}
+    }, { new: true });
+    res.json({ msg: "unliked", likedislike });
+  } else {
+    let likedislike = await Post.findOneAndUpdate(
+      { _id: post._id },
+      { $push: { likes: user._id } },
+      {new:true}
+    )
+    res.json({ msg: "liked", likedislike });
+  }
+};
 
 module.exports = {
   createPost,
@@ -88,4 +125,6 @@ module.exports = {
   userFollowingPosts,
   getUsersPost,
   updatePost,
+  deletePost,
+  likeDislike,
 };

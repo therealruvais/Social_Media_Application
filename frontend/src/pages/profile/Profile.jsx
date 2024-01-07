@@ -5,10 +5,34 @@ import PostCard from "../../components/postCard/PostCard";
 import { useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 
+
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
+
+
 const Profile = () => {
   const { username } = useParams();
-
   const [loading, setLoading] = useState(true);
+
+  const [userPostData, setUserPostData] = useState([]);
+
+  const userPostdata = async () => {
+    const { data } = await axios
+      .get(`http://localhost:1900/api/post/userpost/${username}`, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    setUserPostData(data.userPost);
+    return data.userPost;
+  };
+
+  useEffect(() => {
+    userPostdata();
+  }, [username]);
+  
+
+
 
  useEffect(() => {
    setLoading(true);
@@ -22,7 +46,6 @@ const Profile = () => {
    };
   }, [username])
   
-
   if (loading) {
     return (
       <div className="spinner-container">
@@ -40,11 +63,14 @@ const Profile = () => {
       <div className="profileCard">
         <ProfileCard
           username={username}
+          userPostData={userPostData}
         />
       </div>
       <div className="postCard">
         <PostCard
           username={username}
+          userPostData={userPostData}
+          userPostdata={userPostdata}
         />
       </div>
     </div>

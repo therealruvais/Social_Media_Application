@@ -1,31 +1,50 @@
-import React, { useEffect, useState } from 'react'
-import './postEditModal.css'
-import Modal from 'react-modal'
+import React, { useState } from "react";
+import "./postEditModal.css";
+import Modal from "react-modal";
 
-import axios from 'axios'
+import axios from "axios";
 
-const PostEditModal = ({ openPostModal, setOpenPostModal,data, postId }) => {
-  
-  const [edit, setEdit] = useState(false)
-  const[desc,setDesc] = useState(data.desc)
+const PostEditModal = ({
+  openPostModal,
+  setOpenPostModal,
+  data,
+  postId,
+  userPostdata,
+}) => {
+  const [edit, setEdit] = useState(false);
+  const [desc, setDesc] = useState(data.desc);
   const handleEditClick = () => {
-    setEdit(!edit)
-  }
+    setEdit(!edit);
+  };
 
   const updatePost = async () => {
-    const { data } = await axios.put(`http://localhost:1900/api/post/update/${postId}`, {
-      desc
-    }).catch(err => console.log(err))
+    const { data } = await axios
+      .put(`http://localhost:1900/api/post/update/${postId}`, {
+        desc,
+      })
+      .catch((err) => console.log(err));
     return data;
-  }
+  };
+
+  const deletePost = async () => {
+    const { data } = await axios
+      .delete(`http://localhost:1900/api/post/delete/${postId}`)
+      .catch((err) => console.log("cannot delete post", err));
+    userPostdata()
+    return data;
+  };
 
   const onClickHandle = () => {
-    updatePost().then((data) => console.log(data))
-    setTimeout(() => {
-      setEdit(false)
-    },2000)
- }
+    updatePost().then(() => {
+      setEdit(false);
+    });
+  };
 
+  const onDeleteClick = () => {
+    deletePost().then((data) => {
+      console.log(data);
+    });
+  };
 
   return (
     <Modal
@@ -39,7 +58,12 @@ const PostEditModal = ({ openPostModal, setOpenPostModal,data, postId }) => {
             <div className="peditContainer">
               <div className="leftC">
                 <div className="leftCHead">
-                  <p onClick={handleEditClick} style={{ cursor: "pointer" }}>Cancel</p>
+                  <p
+                    onClick={handleEditClick}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Cancel
+                  </p>
                   <p style={{ fontWeight: 700 }}>Edit info</p>
                 </div>
                 <div className="leftCImg">
@@ -52,7 +76,10 @@ const PostEditModal = ({ openPostModal, setOpenPostModal,data, postId }) => {
               </div>
               <div className="RightC">
                 <div className="rightCHead">
-                  <p onClick={onClickHandle} style={{ color: "var(--color-blue)", cursor: "pointer" }}>
+                  <p
+                    onClick={onClickHandle}
+                    style={{ color: "var(--color-blue)", cursor: "pointer" }}
+                  >
                     Done
                   </p>
                 </div>
@@ -61,7 +88,7 @@ const PostEditModal = ({ openPostModal, setOpenPostModal,data, postId }) => {
                     rows={10}
                     value={desc}
                     placeholder="caption"
-                    onChange={(e)=> setDesc(e.target.value)}
+                    onChange={(e) => setDesc(e.target.value)}
                   />
                 </div>
               </div>
@@ -71,10 +98,20 @@ const PostEditModal = ({ openPostModal, setOpenPostModal,data, postId }) => {
           <>
             <div className="editC">
               <div className="editT">
-                <button onClick={handleEditClick} className="ed-button">Edit</button>
+                <button
+                  onClick={handleEditClick}
+                  className="ed-button"
+                >
+                  Edit
+                </button>
               </div>
               <div className="editD">
-                <button className="ed-button">Delete</button>
+                <button
+                  onClick={onDeleteClick}
+                  className="ed-button"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </>
@@ -84,4 +121,4 @@ const PostEditModal = ({ openPostModal, setOpenPostModal,data, postId }) => {
   );
 };
 
-export default PostEditModal
+export default PostEditModal;

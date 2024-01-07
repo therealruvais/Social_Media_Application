@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./profileCard.css";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
@@ -7,12 +7,12 @@ import EditModal from "./EditModal";
 import LogOutModal from "./LogOutModal";
 axios.defaults.withCredentials = true;
 
-const ProfileCard = ({ username }) => {
+const ProfileCard = ({ username, userPostData }) => {
   const [profileData, setProfileData] = useState([]);
+
   const [userData, setUserData] = useState(null);
   const [editModal, setEditModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
-
   const fileRef = useRef();
 
   const uploadToCloudinary = async (imageFile) => {
@@ -69,6 +69,7 @@ const ProfileCard = ({ username }) => {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
+    setProfileData([data.users])
     return data.users;
   };
   const user = async () => {
@@ -86,17 +87,15 @@ const ProfileCard = ({ username }) => {
     return data;
   };
   const onHandleClick = () => {
-    // Assuming user follows/unfollows instantly before server responds
     const updatedProfileData = profileData.map((profile) => {
       if (profile.username === username) {
-        // Optimistically assume the action will succeed
         const updatedFollowers = profile.followers.some(
           (follower) => follower._id === userData._id
         )
           ? profile.followers.filter(
               (follower) => follower._id !== userData._id
-            ) // If already following, unfollow
-          : [...profile.followers, { _id: userData._id }]; // If not following, follow
+            )
+          : [...profile.followers, { _id: userData._id }];
 
         return {
           ...profile,
@@ -120,7 +119,7 @@ const ProfileCard = ({ username }) => {
 
   useEffect(() => {
     user().then((data) => setUserData(data));
-    profile().then((data) => setProfileData([data]));
+    profile()
   }, [username]);
 
   return (
@@ -191,7 +190,9 @@ const ProfileCard = ({ username }) => {
             </div>
             <div className="followernum">
               <p>
-                <span style={{ fontWeight: "bold" }}>{user.posts.length}</span>{" "}
+                <span style={{ fontWeight: "bold" }}>
+                  {userPostData.length}
+                </span>{" "}
                 posts
               </p>
               <p>
@@ -220,6 +221,7 @@ const ProfileCard = ({ username }) => {
             editModal={editModal}
             setEditModal={setEditModal}
             user={user}
+            profile={profile}
           />
           <LogOutModal
             logoutModal={logoutModal}

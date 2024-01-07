@@ -15,9 +15,7 @@ const SideBar = () => {
     setSearch(!search);
   };
   return (
-    <div
-      className={`sidebar ${search || notify ? "active" : undefined} `}
-    >
+    <div className={`sidebar ${search || notify ? "active" : undefined} `}>
       <div className="SidebarHead">
         <div>
           {search || notify ? (
@@ -42,7 +40,8 @@ const SideBar = () => {
         />
       </div>
       <div className={`Searchbar ${search || notify ? undefined : "active"}`}>
-       { search && <SearchComponent />}{notify && <Notification/>}
+        {search && <SearchComponent handleSearchToggle={handleSearchToggle} />}
+        {notify && <Notification />}
       </div>
     </div>
   );

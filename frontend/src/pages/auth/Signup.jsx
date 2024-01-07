@@ -16,7 +16,6 @@ const Signup = () => {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
   };
- console.log(form)
   const register = async () => {
     const { data } = await axios
       .post(`http://localhost:1900/api/user/register`, {
@@ -31,7 +30,6 @@ const Signup = () => {
       });
     return data
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     register().then(() => navigate("/"));

@@ -1,9 +1,7 @@
 const User = require("../model/userModel");
-const Post = require("../model/postModel")
+const Post = require("../model/postModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-
 
 const createUser = async (req, res) => {
   const { name, email, username, password, gender } = req.body;
@@ -127,7 +125,7 @@ const updateUser = async (req, res) => {
   res.json({ newUser });
 };
 const updateImage = async (req, res) => {
-  const { id } = req.user; 
+  const { id } = req.user;
   try {
     const imageUrl = req.body.imageUrl;
     const updatedUser = await User.findByIdAndUpdate(
@@ -145,7 +143,7 @@ const updateImage = async (req, res) => {
     console.error("Error updating image URL:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 const followUnfollow = async (req, res) => {
   const { username } = req.params;
   const { id } = req.user;
@@ -160,7 +158,9 @@ const followUnfollow = async (req, res) => {
     return res.status(403).json("Action Forbidden");
   }
 
-  const isFollowing = followedUser.followers.includes(followingUser._id.toString());
+  const isFollowing = followedUser.followers.includes(
+    followingUser._id.toString()
+  );
   if (isFollowing) {
     let follow = await User.findOneAndUpdate(
       { _id: followedUser._id },
@@ -172,7 +172,7 @@ const followUnfollow = async (req, res) => {
       { $pull: { following: followedUser._id } },
       { new: true }
     );
-    res.json({msg:'unfollowed', follow});
+    res.json({ msg: "unfollowed", follow });
   } else {
     let follow = await User.findOneAndUpdate(
       { _id: followedUser._id },
@@ -184,12 +184,9 @@ const followUnfollow = async (req, res) => {
       { $push: { following: followedUser._id } },
       { new: true }
     );
-    res.json({msg:'followed', follow });
+    res.json({ msg: "followed", follow });
   }
 };
-
-
-
 
 module.exports = {
   createUser,

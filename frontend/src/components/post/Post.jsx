@@ -6,48 +6,65 @@ import { FaRegComment } from "react-icons/fa6";
 import { LuShare2 } from "react-icons/lu";
 import { TextContext } from "../../context/TextContext";
 import CommentModal from "../modal/CommentModal";
+import axios from "axios";
+import { UserDataContext } from "../../context/UserDataContext";
 
-const Post = ({ item }) => {
+const Post = ({ item, posts }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [like, setLike] = useState(false);
+  const [postId, setPostId] = useState(item._id);
+  const [comments, setComments] = useState("");
+
+  const { userData } = useContext(UserDataContext);
 
   const { showFullText, toggleText } = useContext(TextContext);
   const text = item.desc;
-  const maxLength = 100;
+  const maxLength = 70;
   const displayText = showFullText ? text : text.slice(0, maxLength);
 
   const handleModalToggle = () => {
     setModalIsOpen(true);
   };
-  const likeToggle = () => {
-    setLike(!like);
+
+  const likeUnlike = async () => {
+    const { data } = await axios
+      .put(`http://localhost:1900/api/post/like/${postId}`)
+      .catch((err) => console.log("error fetching post data", err));
+    posts();
+    return data;
   };
 
-   const getTimeDifference = () => {
-     const currentTime = new Date();
-     const createdAtTime = new Date(item.createdAt);
-     const timeDifferenceInSeconds = Math.floor(
-       (currentTime - createdAtTime) / 1000
-     );
+  const handlelikeClick = () => {
+    setPostId(item._id);
+    likeUnlike().then((data) => console.log(data));
+  };
 
-     const days = Math.floor(timeDifferenceInSeconds / (3600 * 24));
-     const hours = Math.floor((timeDifferenceInSeconds % (3600 * 24)) / 3600);
-     const minutes = Math.floor((timeDifferenceInSeconds % 3600) / 60);
-     const seconds = timeDifferenceInSeconds % 60;
+  const getTimeDifference = () => {
+    const currentTime = new Date();
+    const createdAtTime = new Date(item.createdAt);
+    const timeDifferenceInSeconds = Math.floor(
+      (currentTime - createdAtTime) / 1000
+    );
 
-     let displayTime = "";
-     if (days > 0) {
-       displayTime = `${days}d`;
-     } else if (hours > 0) {
-       displayTime = `${hours}h `;
-     } else if (minutes > 0) {
-       displayTime = `${minutes}m`;
-     } else {
-       displayTime = `${seconds}s`;
-     }
+    const days = Math.floor(timeDifferenceInSeconds / (3600 * 24));
+    const hours = Math.floor((timeDifferenceInSeconds % (3600 * 24)) / 3600);
+    const minutes = Math.floor((timeDifferenceInSeconds % 3600) / 60);
+    const seconds = timeDifferenceInSeconds % 60;
 
-     return displayTime;
-   };
+    let displayTime = "";
+    if (days > 0) {
+      displayTime = `${days}d`;
+    } else if (hours > 0) {
+      displayTime = `${hours}h `;
+    } else if (minutes > 0) {
+      displayTime = `${minutes}m`;
+    } else {
+      displayTime = `${seconds}s`;
+    }
+
+    return displayTime;
+  };
+
+  const hasLiked = item.likes.some((likeId) => likeId === userData._id);
 
   return (
     <div>
@@ -68,12 +85,14 @@ const Post = ({ item }) => {
           </div>
           {/*------------------------- Model strts here------------------- */}
           <CommentModal
-            likeToggle={likeToggle}
-            like={like}
             modalIsOpen={modalIsOpen}
             setModalIsOpen={setModalIsOpen}
             item={item}
             getTimeDifference={getTimeDifference}
+            hasLiked={hasLiked}
+            handlelikeClick={handlelikeClick}
+            comments={comments}
+            setComments={setComments}
           />
           {/*------------------------ Model ends here------------------------------- */}
           <div className="posts">
@@ -83,8 +102,12 @@ const Post = ({ item }) => {
             />
             <div className="p-icons">
               <div className="lcs-icons">
-                <div onClick={likeToggle}>
-                  {like ? <FaHeart className="liked-icon" /> : <FaRegHeart />}
+                <div onClick={handlelikeClick}>
+                  {hasLiked ? (
+                    <FaHeart className="liked-icon" />
+                  ) : (
+                    <FaRegHeart />
+                  )}
                 </div>
 
                 <FaRegComment onClick={handleModalToggle} />
@@ -123,9 +146,12 @@ const Post = ({ item }) => {
               <input
                 className="post-comment"
                 type="text"
-                placeholder="add a comment"
+                placeholder="add a comment :)"
+                name="comments"
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
               />
-              <p className="post-p">post</p>
+              {comments ? <p className="post-p">post</p> : ""}
             </div>
           </div>
         </div>

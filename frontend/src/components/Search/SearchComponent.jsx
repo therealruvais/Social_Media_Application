@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
-const SearchComponent = () => {
+const SearchComponent = ({ handleSearchToggle }) => {
   const [searching, setSearching] = useState("");
   const [users, setUsers] = useState([]);
   const handleChange = (e) => {
@@ -22,16 +22,17 @@ const SearchComponent = () => {
     return res;
   };
   const handleClose = () => {
-    setSearching("")
-    setUsers([])
- }
+    setSearching("");
+    setUsers([]);
+    handleSearchToggle()
+  };
   useEffect(() => {
     if (searching) {
       searchData()
         .then((res) => setUsers(res.data.users))
         .catch((err) => console.log("usernot found", err));
     } else {
-      setUsers([])
+      setUsers([]);
     }
   }, [searching]);
 
@@ -67,15 +68,23 @@ const SearchComponent = () => {
         </div>
       </div>
       <div className="Soutput">
-      {users.map((user) => (
-          <Link
-            key={user._id}
-            className="searchLink"
-            to={`/profile/${user.username}`}
-          >
-            <UsersCard user={user} />
-          </Link>
-      ))}
+        {searching && users.length === 0 ? (
+          <center>
+            <h3>User not Found</h3>
+          </center>
+        ) : (
+          <>
+            {users.map((user) => (
+              <Link
+                key={user._id}
+                className="searchLink"
+                to={`/profile/${user.username}`}
+              >
+                <UsersCard user={user} />
+              </Link>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
