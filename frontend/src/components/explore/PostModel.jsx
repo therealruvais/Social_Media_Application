@@ -16,7 +16,7 @@ const PostModel = ({ item, openModal, setOpenModal }) => {
         <div className="modalLeft">
           <img
             className="ModalImg"
-            src={item.postImg}
+            src={item.image}
             alt=""
           />
         </div>
@@ -27,10 +27,10 @@ const PostModel = ({ item, openModal, setOpenModal }) => {
               <div className="modalpostImg">
                 <img
                   className="modalUserImg"
-                  src={item.userImg}
+                  src={item.owner.image}
                   alt=""
                 />
-                <p>{item.username}</p>
+                <p>{item.owner.username}</p>
               </div>
               <div>
                 <BsThreeDots />
@@ -41,11 +41,11 @@ const PostModel = ({ item, openModal, setOpenModal }) => {
               <div className="commentavtar">
                 <img
                   className="modalcommentImg"
-                  src={item.userImg}
+                  src={item.owner.image}
                   alt=""
                 />
                 <p>
-                  @{item.username} <span>{item.desc}</span>
+                  @{item.owner.username} <span>{item.owner.desc}</span>
                 </p>
                 <p style={{ alignSelf: "center", cursor: "pointer" }}>
                   <FaRegHeart />
@@ -68,7 +68,7 @@ const PostModel = ({ item, openModal, setOpenModal }) => {
                 </div>
                 <FaRegBookmark className="savemodal" />
               </div>
-              <p style={{ fontWeight: "bold" }}>1000 likes</p>
+              <p style={{ fontWeight: "bold" }}>{item.likes.length} likes</p>
               <p style={{ fontSize: "12px", color: "#969696" }}>2d ago</p>
               <div className="modalInput">
                 <input

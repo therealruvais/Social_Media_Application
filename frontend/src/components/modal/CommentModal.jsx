@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import "./commentModal.css";
 import Modal from "react-modal";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa6";
 import { LuShare2 } from "react-icons/lu";
-import "./commentModal.css";
+
+import CommentS from "./CommentS";
+
+
 const CommentModal = ({
   modalIsOpen,
   setModalIsOpen,
@@ -14,9 +17,18 @@ const CommentModal = ({
   hasLiked,
   comments,
   setComments,
+  postComment,
+  commentData,
+  getComments,
 }) => {
- 
+  
 
+  const onPostClick = () => {
+    postComment();
+    setComments("");
+  };
+
+  
   return (
     <>
       <Modal
@@ -55,17 +67,19 @@ const CommentModal = ({
                   alt=""
                 />
                 <p>
-                  @{item.owner.username} <span>{item.desc}</span>
-                </p>
-                <p style={{ alignSelf: "center", cursor: "pointer" }}>
-                  <FaRegHeart />
+                  <span style={{ fontWeight: "bold" }}>
+                    @{item.owner.username}
+                  </span>{" "}
+                  <span>{item.desc}</span>
                 </p>
               </div>
-              <div className="commentreply">
-                <p>2d</p>
-                <p>11 likes</p>
-                <p>reply</p>
-              </div>
+              {commentData.map((data) => (
+                <CommentS
+                  data={data}
+                  key={data._id}
+                  getComments={getComments}
+                />
+              ))}
             </div>
             <div className="lcsModalContainer">
               <div className="lslModal">
@@ -98,7 +112,16 @@ const CommentModal = ({
                   value={comments}
                   onChange={(e) => setComments(e.target.value)}
                 />
-                {comments ? <p className="post-p">post</p> : ""}
+                {comments ? (
+                  <p
+                    onClick={onPostClick}
+                    className="post-p"
+                  >
+                    post
+                  </p>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

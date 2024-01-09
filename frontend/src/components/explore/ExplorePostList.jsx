@@ -15,7 +15,7 @@ const ExplorePostList = ({ item }) => {
       >
         <img
           className="explore"
-          src={item.postImg}
+          src={item.image}
           alt=""
         />
 
@@ -24,13 +24,13 @@ const ExplorePostList = ({ item }) => {
             <p>
               <FaHeart />
             </p>
-            <p>1000</p>
+            <p>{item.likes.length}</p>
           </div>
           <div className="commentIcon">
             <p>
               <FaComment />
             </p>
-            <p>500</p>
+            <p>{ item.comments.length}</p>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 const Post = require("../model/postModel");
 const User = require("../model/userModel");
+const Comment = require("../model/commentModel");
 
 const createPost = async (req, res) => {
   const { id } = req.user;
@@ -25,7 +26,7 @@ const createPost = async (req, res) => {
   }
 };
 const getPost = async (req, res) => {
-  const post = await Post.findById(req.params.id).populate("owner");
+  const post = await Post.find({}).populate("owner").sort({ createdAt: -1 });
   if (post) {
     res.json({
       post,
@@ -88,7 +89,7 @@ const deletePost = async (req, res) => {
   const deletedPost = await Post.findByIdAndDelete(id);
   if (!deletedPost) throw new Error("cannot find the Post");
 
-  res.json({ msg: "success", deletedPost });
+  res.json({ msg: "success" });
 };
 const likeDislike = async (req, res) => {
   const { id } = req.user;
@@ -103,20 +104,76 @@ const likeDislike = async (req, res) => {
 
   const isLiked = post.likes.includes(user._id);
   if (isLiked) {
-    let likedislike = await Post.findOneAndUpdate({
-      _id: post._id,
-    }, {
-      $pull:{likes:user._id}
-    }, { new: true });
+    let likedislike = await Post.findOneAndUpdate(
+      {
+        _id: post._id,
+      },
+      {
+        $pull: { likes: user._id },
+      },
+      { new: true }
+    );
     res.json({ msg: "unliked", likedislike });
   } else {
     let likedislike = await Post.findOneAndUpdate(
       { _id: post._id },
       { $push: { likes: user._id } },
-      {new:true}
-    )
+      { new: true }
+    );
     res.json({ msg: "liked", likedislike });
   }
+};
+
+const addComment = async (req, res) => {
+  const { id } = req.user;
+  const { postId } = req.params;
+  const { content } = req.body;
+
+  const user = await User.findById(id).select("-password");
+  const post = await Post.findById(postId);
+
+  if (!user || !post) {
+    return res.status(404).json({ error: "User or Post not found" });
+  }
+
+  const newComment = new Comment({
+    content,
+    owner: id,
+  });
+  await newComment.save();
+
+  post.comments.push(newComment);
+  await post.save();
+
+  res.json({ msg: "success", comment: newComment });
+};
+
+const getAllComments = async (req, res) => {
+  const { postId } = req.params;
+  const post = await Post.findById(postId);
+  const comments = await Comment.find({
+    _id: { $in: post.comments },
+  }).populate({
+    path: "owner",
+    select: "username image",
+  });
+
+  if (!comments) throw new Error("cannot get comments");
+
+  res.json({ comments });
+};
+
+const deleteComment = async (req, res) => {
+  const { id } = req.params;
+  const comment = await Comment.findByIdAndDelete(id);
+  if (!comment) throw new Error("cannot find comment");
+
+  await Post.findOneAndUpdate(
+    { comments: { $in: [comment._id] } },
+    { $pull: { comments: comment._id } }
+  );
+
+  res.json({ msg: "success" });
 };
 
 module.exports = {
@@ -127,4 +184,7 @@ module.exports = {
   updatePost,
   deletePost,
   likeDislike,
+  addComment,
+  getAllComments,
+  deleteComment,
 };

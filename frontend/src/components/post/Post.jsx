@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./post.css";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa";
@@ -6,13 +6,16 @@ import { FaRegComment } from "react-icons/fa6";
 import { LuShare2 } from "react-icons/lu";
 import { TextContext } from "../../context/TextContext";
 import CommentModal from "../modal/CommentModal";
-import axios from "axios";
 import { UserDataContext } from "../../context/UserDataContext";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 const Post = ({ item, posts }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [postId, setPostId] = useState(item._id);
   const [comments, setComments] = useState("");
+  const [commentData, setCommentData] = useState([]);
+
 
   const { userData } = useContext(UserDataContext);
 
@@ -23,6 +26,7 @@ const Post = ({ item, posts }) => {
 
   const handleModalToggle = () => {
     setModalIsOpen(true);
+    setPostId(item._id);
   };
 
   const likeUnlike = async () => {
@@ -64,6 +68,37 @@ const Post = ({ item, posts }) => {
     return displayTime;
   };
 
+  const getComments = async () => {
+    const { data } = await axios
+      .get(`http://localhost:1900/api/post/getcomments/${postId}`, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(`error feching comment data`, err));
+    setCommentData(data.comments);
+    return data;
+  };
+
+
+  const postComment = async () => {
+    const { data } = await axios.post(
+      `http://localhost:1900/api/post/comment/${postId}`, {
+        content:comments,
+      }
+    ).catch(err => console.log(`error posting comment`, err))
+    getComments()
+    return data
+  }
+
+  
+  useEffect(() => {
+    getComments();
+  }, []);
+
+  const onPostClick = () => {
+    postComment().then(data => console.log(data))
+    setComments("")
+  }
+
   const hasLiked = item.likes.some((likeId) => likeId === userData._id);
 
   return (
@@ -93,6 +128,9 @@ const Post = ({ item, posts }) => {
             handlelikeClick={handlelikeClick}
             comments={comments}
             setComments={setComments}
+            postComment={postComment}
+            commentData={commentData}
+            getComments={getComments}
           />
           {/*------------------------ Model ends here------------------------------- */}
           <div className="posts">
@@ -141,7 +179,7 @@ const Post = ({ item, posts }) => {
             <p
               style={{ cursor: "pointer" }}
               onClick={handleModalToggle}
-            >{`View All Comment's`}</p>
+            >{`View All ${item.comments.length} Comment's`}</p>
             <div className="add-comment">
               <input
                 className="post-comment"
@@ -149,9 +187,19 @@ const Post = ({ item, posts }) => {
                 placeholder="add a comment :)"
                 name="comments"
                 value={comments}
+                onClick={() => setPostId(item._id)}
                 onChange={(e) => setComments(e.target.value)}
               />
-              {comments ? <p className="post-p">post</p> : ""}
+              {comments ? (
+                <p
+                  onClick={onPostClick}
+                  className="post-p"
+                >
+                  post
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

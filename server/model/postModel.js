@@ -18,10 +18,12 @@ var postSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-  comments: {
-    type: Array,
-    required: true,
-  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

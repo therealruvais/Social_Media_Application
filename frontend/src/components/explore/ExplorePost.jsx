@@ -4,13 +4,13 @@ import { FaHeart, FaComment } from "react-icons/fa";
 import ExplorePostList from "./ExplorePostList";
 import PostData from "../../data/PostData";
 
-const ExplorePost = () => {
+const ExplorePost = ({ exploreData }) => {
   return (
     <div className="exploreContainer">
-      {PostData.map((item, id) => (
+      {exploreData.map((item) => (
         <ExplorePostList
           item={item}
-          key={id}
+          key={item._id}
         />
       ))}
     </div>

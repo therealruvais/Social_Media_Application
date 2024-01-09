@@ -87,14 +87,17 @@ position: relative;
   width: 100%;
   margin-top: 190px;
   background-color: var(--color-light);
+  border-top: 1px solid #9999;
 }
 .lslModal {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 5px;
 }
 .modalInput {
   display: flex;
+  border-top: 1px solid #9999;
 }
 .inputModal {
   width: 90%;
@@ -114,9 +117,7 @@ position: relative;
   font-size: 1.5rem;
   cursor: pointer;
 }
-.lslModal {
-  border-bottom: 1px solid var(--color-gray);
-}
+
 .commentreply > p:nth-child(3) {
   cursor: pointer;
 }

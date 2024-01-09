@@ -56,7 +56,7 @@ user()
         <HashLoader
           color="#36d7b7"
           loading={loading}
-          size={50}
+          size={30}
         />
       </div>
     );
