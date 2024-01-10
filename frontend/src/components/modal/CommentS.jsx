@@ -7,7 +7,7 @@ const CommentS = ({ data, getComments }) => {
   const { userData } = useContext(UserDataContext);
   const [commentId, setCommentId] = useState(data._id);
 
-  const deleteComment = async (req, res) => {
+  const deleteComment = async () => {
     const { data } = await axios
       .delete(`http://localhost:1900/api/post/deleteC/${commentId}`)
       .catch((err) => console.log(err));

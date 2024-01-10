@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import "./explorePost.css";
-import { FaHeart, FaComment } from "react-icons/fa";
 import ExplorePostList from "./ExplorePostList";
-import PostData from "../../data/PostData";
 
-const ExplorePost = ({ exploreData }) => {
+const ExplorePost = ({ exploreData, userData }) => {
   return (
     <div className="exploreContainer">
       {exploreData.map((item) => (
         <ExplorePostList
           item={item}
           key={item._id}
+          userData={userData}
         />
       ))}
     </div>

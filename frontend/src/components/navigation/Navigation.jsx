@@ -17,6 +17,9 @@ const Navigation = ({
 }) => {
   const [nav, setNav] = useState(NavData);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+   const [notificationCount3, setNotificationCount3] = useState(0);
+   const [notificationCount4, setNotificationCount4] = useState(0); 
+
   const handleModalToggle = () => {
     setModalIsOpen(true);
   };
@@ -37,7 +40,6 @@ const Navigation = ({
       .catch((err) => console.log(err));
     return data.getaUser;
   };
-
   useEffect(() => {
     const updateNavData = async () => {
       const currentUser = await user();
@@ -59,6 +61,14 @@ const Navigation = ({
     updateNavData();
   }, []);
 
+   const increaseNotificationCount3 = () => {
+     setNotificationCount3(notificationCount3 + 1);
+   };
+
+   const increaseNotificationCount4 = () => {
+     setNotificationCount4(notificationCount4 + 1);
+   };
+
   return (
     <div className="sideMenu">
       <ul className="nav">
@@ -74,6 +84,10 @@ const Navigation = ({
             handleNotifyToggle={handleNotifyToggle}
             notify={notify}
             setNotify={setNotify}
+            notificationCount3={notificationCount3}
+            notificationCount4={notificationCount4}
+            increaseNotificationCount3={increaseNotificationCount3}
+            increaseNotificationCount4={increaseNotificationCount4}
           />
         ))}
       </ul>

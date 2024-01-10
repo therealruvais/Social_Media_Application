@@ -42,6 +42,11 @@
   display: none;
 }
 
+.notification{
+  position: absolute;
+  left: 60px;
+  color: red;
+}
 
 
 /* .sideMenu .nav li a {

@@ -10,37 +10,43 @@ const NavlistItem = ({
   search,
   handleNotifyToggle,
   notify,
-  setNotify
+  setNotify,
+  notificationCount3,
+  notificationCount4,
+  increaseNotificationCount3,
+  increaseNotificationCount4,
 }) => {
   const handleClick = () => {
     if (item._id === 5 && handleModalToggle) {
       handleModalToggle();
       setSearch(false);
-      setNotify(false)
-    } if (item._id === 6 && handleSearchToggle) {
+      setNotify(false);
+    }
+    if (item._id === 6 && handleSearchToggle) {
       handleSearchToggle();
-      setNotify(false)
-    } if (item._id === 3 && handleNotifyToggle) {
-      handleNotifyToggle()
-      setSearch(false)
+      setNotify(false);
+    }
+    if (item._id === 3 && handleNotifyToggle) {
+      handleNotifyToggle();
+      setSearch(false);
     }
     if (item._id === 1) {
-      setSearch(false)
-      setNotify(false)
+      setSearch(false);
+      setNotify(false);
     }
     if (item._id === 2) {
-      setSearch(false)
-      setNotify(false)
+      setSearch(false);
+      setNotify(false);
     }
     if (item._id === 4) {
-      setSearch(false)
-      setNotify(false)
+      setSearch(false);
+      setNotify(false);
     }
     if (item._id === 7) {
-      setSearch(false)
-      setNotify(false)
+      setSearch(false);
+      setNotify(false);
     }
-   
+
     navonClick(item._id);
   };
   return (
@@ -51,10 +57,18 @@ const NavlistItem = ({
         onClick={handleClick}
       >
         <span className="nav-icon">{item.icon}</span>
-        <span className={`nav-name ${search || notify ? "active" : undefined} `}>
+        <span
+          className={`nav-name ${search || notify ? "active" : undefined} `}
+        >
           {item.name}
         </span>
       </Link>
+      {item._id === 3 && notificationCount3 > 0 && (
+        <span className="notification">{notificationCount3}</span>
+      )}
+      {item._id === 4 && notificationCount4 > 0 && (
+        <span className="notification">{notificationCount4}</span>
+      )}
     </li>
   );
 };

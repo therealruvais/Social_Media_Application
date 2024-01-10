@@ -10,7 +10,7 @@ const Explore = () => {
   const [loading, setLoading] = useState(true);
 
   const [exploreData, setExoloreData] = useState([]);
-  console.log(exploreData);
+  const [userD, setUserD] = useState(null);
   const getAllPosts = async () => {
     const { data } = await axios
       .get(`http://localhost:1900/api/post/post`, {
@@ -21,8 +21,18 @@ const Explore = () => {
     setLoading(false);
     return data;
   };
+  const user = async () => {
+    const { data } = await axios
+      .get(`http://localhost:1900/api/user/verify`, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    return data;
+  };
+
   useEffect(() => {
     getAllPosts();
+    user().then((data) => setUserD(data.getaUser));
   }, []);
 
   if (loading) {
@@ -39,7 +49,10 @@ const Explore = () => {
 
   return (
     <div className="exploreSec">
-      <ExplorePost exploreData={exploreData} />
+      <ExplorePost
+        userData={userD}
+        exploreData={exploreData}
+      />
     </div>
   );
 };

@@ -123,7 +123,6 @@ const likeDislike = async (req, res) => {
     res.json({ msg: "liked", likedislike });
   }
 };
-
 const addComment = async (req, res) => {
   const { id } = req.user;
   const { postId } = req.params;
@@ -147,7 +146,6 @@ const addComment = async (req, res) => {
 
   res.json({ msg: "success", comment: newComment });
 };
-
 const getAllComments = async (req, res) => {
   const { postId } = req.params;
   const post = await Post.findById(postId);
@@ -162,7 +160,6 @@ const getAllComments = async (req, res) => {
 
   res.json({ comments });
 };
-
 const deleteComment = async (req, res) => {
   const { id } = req.params;
   const comment = await Comment.findByIdAndDelete(id);
