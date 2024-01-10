@@ -1,28 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useState } from "react";
 import "../postCard/postCard.css";
 import PostEditModal from "./PostEditModal";
 
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const UserPost = ({ data, userPostdata }) => {
+const UserPost = ({ data, userPostdata,userData }) => {
   const [openPostModal, setOpenPostModal] = useState(false);
-  const [userData, setUserData] = useState(null);
   const [postId, setPostId] = useState(null);
-
-  const user = async () => {
-    const { data } = await axios
-      .get(`http://localhost:1900/api/user/verify`, {
-        withCredentials: true,
-      })
-      .catch((err) => console.log(err));
-    setUserData(data.getaUser);
-    return data.getaUser;
-  };
-
-  useEffect(() => {
-    user();
-  }, []);
 
   const handleImageClick = (postId) => {
     setPostId(postId);

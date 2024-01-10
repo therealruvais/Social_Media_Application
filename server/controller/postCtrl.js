@@ -172,6 +172,47 @@ const deleteComment = async (req, res) => {
 
   res.json({ msg: "success" });
 };
+const savePost = async (req, res) => {
+  const { id } = req.user;
+  const { postId } = req.params;
+
+  const user = await User.findById(id).select("-password");
+  const post = await Post.findById(postId);
+  if (!user || !post) {
+    return res.status(404).json({ error: "User or Post not found" });
+  }
+  const isSaved = user.saved.includes(post._id);
+  if (isSaved) {
+    let save = await User.findOneAndUpdate(
+      { _id: user._id },
+      {
+        $pull: { saved: post._id },
+      },
+      {
+        new: true,
+      }
+    );
+    res.json({ msg: "unsaved", save });
+  } else {
+    let save = await User.findOneAndUpdate(
+      { _id: user._id },
+      { $push: { saved: post._id } },
+      { new: true }
+    );
+    res.json({ msg: "saved", save });
+  }
+};
+
+const getSavedPosts = async (req, res) => {
+  const { username } = req.params;
+  const user = await User.findOne({username}).select("-password");
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+  const savedPosts = await Post.find({ _id: { $in: user.saved } });
+  res.json({ savedPosts });
+};
+
 
 module.exports = {
   createPost,
@@ -184,4 +225,6 @@ module.exports = {
   addComment,
   getAllComments,
   deleteComment,
+  savePost,
+  getSavedPosts,
 };

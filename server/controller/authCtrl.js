@@ -144,6 +144,7 @@ const updateImage = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
 const followUnfollow = async (req, res) => {
   const { username } = req.params;
   const { id } = req.user;
@@ -187,6 +188,8 @@ const followUnfollow = async (req, res) => {
     res.json({ msg: "followed", follow });
   }
 };
+
+
 
 module.exports = {
   createUser,

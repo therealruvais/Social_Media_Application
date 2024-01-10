@@ -21,6 +21,7 @@ const Home = () => {
         withCredentials:true,
       })
       .catch((err) => console.log(err));
+    setUserData(data.getaUser);
     return data;
   };
 
@@ -34,8 +35,7 @@ const Home = () => {
 
   useEffect(() => {
 user()
-  .then((data) => {
-    setUserData(data.getaUser);
+  .then(() => {
     setLoading(false);
   })
   .catch((error) => {
@@ -69,7 +69,8 @@ user()
           <Post
             item={data}
             key={id}
-           posts={posts}
+            posts={posts}
+            user={user}
           />
         ))}
       </div>

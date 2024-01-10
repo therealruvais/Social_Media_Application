@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./post.css";
 import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaRegBookmark, FaHeart, FaBookmark } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa6";
 import { LuShare2 } from "react-icons/lu";
 import { TextContext } from "../../context/TextContext";
@@ -10,12 +10,11 @@ import { UserDataContext } from "../../context/UserDataContext";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const Post = ({ item, posts }) => {
+const Post = ({ item, posts, user }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [postId, setPostId] = useState(item._id);
   const [comments, setComments] = useState("");
   const [commentData, setCommentData] = useState([]);
-
 
   const { userData } = useContext(UserDataContext);
 
@@ -78,28 +77,41 @@ const Post = ({ item, posts }) => {
     return data;
   };
 
+  const savePost = async () => {
+    const { data } = await axios
+      .put(`http://localhost:1900/api/post/save/${postId}`)
+      .catch((err) => console.log("error saving post", err));
+    user();
+    posts();
+    return data;
+  };
+
+  const onSaveClick = () => {
+    setPostId(item._id);
+    savePost().then((data) => console.log(data));
+  };
 
   const postComment = async () => {
-    const { data } = await axios.post(
-      `http://localhost:1900/api/post/comment/${postId}`, {
-        content:comments,
-      }
-    ).catch(err => console.log(`error posting comment`, err))
-    getComments()
-    return data
-  }
+    const { data } = await axios
+      .post(`http://localhost:1900/api/post/comment/${postId}`, {
+        content: comments,
+      })
+      .catch((err) => console.log(`error posting comment`, err));
+    getComments();
+    return data;
+  };
 
-  
   useEffect(() => {
     getComments();
   }, []);
 
   const onPostClick = () => {
-    postComment().then(data => console.log(data))
-    setComments("")
-  }
+    postComment().then((data) => console.log(data));
+    setComments("");
+  };
 
   const hasLiked = item.likes.some((likeId) => likeId === userData._id);
+  const isSaved = userData.saved.some((saveId) => saveId === item._id);
 
   return (
     <div>
@@ -151,8 +163,11 @@ const Post = ({ item, posts }) => {
                 <FaRegComment onClick={handleModalToggle} />
                 <LuShare2 />
               </div>
-              <div className="save-icon">
-                <FaRegBookmark />
+              <div
+                onClick={onSaveClick}
+                className="save-icon"
+              >
+                {isSaved ? <FaBookmark /> : <FaRegBookmark />}
               </div>
             </div>
             <p style={{ marginTop: "5px", fontWeight: "bold" }}>
