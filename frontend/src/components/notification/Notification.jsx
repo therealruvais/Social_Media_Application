@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./notification.css";
-import avatar from "../../socialmedia/avatar/avatar8.jpg";
+import { MdDelete } from "react-icons/md";
+
+import axios from 'axios'
+import { NotifyContext } from "../../context/NotifyContext";
+import Notify from "./Notify";
+axios.defaults.withCredentials = true;
 
 const Notification = () => {
+
+  const [notifyData, setNotifydata] = useState([])
+  
+  const getNotify = async () => {
+    const { data } = await axios.get(`http://localhost:1900/api/notify/follow`, {
+      withCredentials:true,
+    }).catch(err => console.log(`error  fetching data`, err))
+    setNotifydata(data.notifications)
+    return data
+  }
+
+  useEffect(() => {
+   getNotify()
+  }, [])
+  
+  
   return (
     <div className="notifyC">
       <div className="notifyHead">
@@ -18,16 +39,9 @@ const Notification = () => {
         </p>
       </div>
       <div className="notifications">
-        <div className="Nimg">
-          <img
-            src={avatar}
-            alt=""
-          />
-          <div className="Nname">
-            <span style={{ fontWeight: "bold" }}>lilly John</span>{" "}
-            <span> started following you</span>
-          </div>
-        </div>
+        {notifyData.map((data) => (
+          <Notify data={data} key={data._id} getNotify={getNotify} />
+        ))}
       </div>
     </div>
   );

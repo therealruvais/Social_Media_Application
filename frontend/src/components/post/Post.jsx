@@ -143,6 +143,8 @@ const Post = ({ item, posts, user }) => {
             postComment={postComment}
             commentData={commentData}
             getComments={getComments}
+            onSaveClick={onSaveClick}
+            isSaved={isSaved}
           />
           {/*------------------------ Model ends here------------------------------- */}
           <div className="posts">

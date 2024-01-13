@@ -1,6 +1,7 @@
 const Post = require("../model/postModel");
 const User = require("../model/userModel");
 const Comment = require("../model/commentModel");
+const Notify = require("../model/notificationModel");
 
 const createPost = async (req, res) => {
   const { id } = req.user;
@@ -119,7 +120,23 @@ const likeDislike = async (req, res) => {
       { _id: post._id },
       { $push: { likes: user._id } },
       { new: true }
+    ).populate('owner');
+
+    const notification = await Notify.create({
+      user: post.owner._id,
+      actionBy: user._id,
+      actionType: "liked your post",
+      post: post._id,
+      username: user.username,
+      image: user.image,
+    });
+
+    await User.findByIdAndUpdate(
+      post.owner._id,
+      { $push: { notifications: notification._id } },
+      { new: true }
     );
+
     res.json({ msg: "liked", likedislike });
   }
 };
@@ -129,7 +146,7 @@ const addComment = async (req, res) => {
   const { content } = req.body;
 
   const user = await User.findById(id).select("-password");
-  const post = await Post.findById(postId);
+  const post = await Post.findById(postId).populate("owner");
 
   if (!user || !post) {
     return res.status(404).json({ error: "User or Post not found" });
@@ -143,6 +160,21 @@ const addComment = async (req, res) => {
 
   post.comments.push(newComment);
   await post.save();
+
+  const notification = await Notify.create({
+    user: post.owner,
+    actionBy: user._id,
+    actionType: "Commented on your post",
+    post: post._id,
+    username: user.username,
+    image: user.image,
+  });
+
+ await User.findByIdAndUpdate(
+   post.owner._id,
+   { $push: { notifications: notification._id } },
+   { new: true }
+ );
 
   res.json({ msg: "success", comment: newComment });
 };
@@ -205,14 +237,13 @@ const savePost = async (req, res) => {
 
 const getSavedPosts = async (req, res) => {
   const { username } = req.params;
-  const user = await User.findOne({username}).select("-password");
+  const user = await User.findOne({ username }).select("-password");
   if (!user) {
     return res.status(404).json({ error: "User not found" });
   }
   const savedPosts = await Post.find({ _id: { $in: user.saved } });
   res.json({ savedPosts });
 };
-
 
 module.exports = {
   createPost,

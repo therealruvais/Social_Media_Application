@@ -24,6 +24,8 @@ var postSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
+  notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: "Notify" }],
+
   createdAt: {
     type: Date,
     default: Date.now,

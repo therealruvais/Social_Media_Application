@@ -8,6 +8,12 @@ import Notification from "../../components/notification/Notification";
 const SideBar = () => {
   const [search, setSearch] = useState(false);
   const [notify, setNotify] = useState(false);
+  const [message, setMessage] = useState(false);
+
+  const handleMessageToggle = () => {
+    setMessage(!message)
+  }
+
   const handleNotifyToggle = () => {
     setNotify(!notify);
   };
@@ -15,10 +21,10 @@ const SideBar = () => {
     setSearch(!search);
   };
   return (
-    <div className={`sidebar ${search || notify ? "active" : undefined} `}>
+    <div className={`sidebar ${search || notify ? "active" : undefined} ${message?"message":undefined} `}>
       <div className="SidebarHead">
         <div>
-          {search || notify ? (
+          {search || notify || message ? (
             <img
               className="LogoImg"
               src={logo}
@@ -37,6 +43,9 @@ const SideBar = () => {
           setNotify={setNotify}
           notify={notify}
           handleNotifyToggle={handleNotifyToggle}
+          handleMessageToggle={handleMessageToggle}
+          setMessage={setMessage}
+          message={message}
         />
       </div>
       <div className={`Searchbar ${search || notify ? undefined : "active"}`}>

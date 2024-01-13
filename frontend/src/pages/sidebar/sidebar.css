@@ -17,6 +17,9 @@
 .sidebar.active{
   width: 35%;
 }
+.sidebar.message{
+  width:8%;
+}
 .Searchbar{
   width: 100%;
 }

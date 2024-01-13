@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Modal from "react-modal";
 import UserProvider from "./context/UserDataContext.jsx";
 import PostProvider from "./context/PostContext.jsx";
+import NotifyProvider from "./context/NotifyContext.jsx";
 
 Modal.setAppElement("#root");
 Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, 0.349)";
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Router>
       <UserProvider>
         <PostProvider>
-          <App />
+          <NotifyProvider>
+            <App />
+          </NotifyProvider>
         </PostProvider>
       </UserProvider>
     </Router>

@@ -2,6 +2,7 @@ const User = require("../model/userModel");
 const Post = require("../model/postModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Notify = require('../model/notificationModel')
 
 const createUser = async (req, res) => {
   const { name, email, username, password, gender } = req.body;
@@ -185,6 +186,18 @@ const followUnfollow = async (req, res) => {
       { $push: { following: followedUser._id } },
       { new: true }
     );
+
+    const notification = await Notify.create({
+      user: followedUser._id,
+      actionBy: followingUser._id,
+      actionType: "Started following you",
+      username: followingUser.username,
+      image: followingUser.image,
+    });
+
+    followedUser.notifications.push(notification._id);
+    await followedUser.save();
+
     res.json({ msg: "followed", follow });
   }
 };

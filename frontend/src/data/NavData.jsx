@@ -40,7 +40,7 @@ export const NavData = [
   },
   {
     _id: 4,
-    target: "#",
+    target: "/message",
     name: "Message",
     icon: <BsMessenger />,
     active: false,

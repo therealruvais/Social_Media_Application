@@ -1,7 +1,7 @@
 import "./commentModal.css";
 import Modal from "react-modal";
 import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart, FaRegBookmark, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaRegBookmark, FaHeart, FaBookmark } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa6";
 import { LuShare2 } from "react-icons/lu";
 
@@ -20,6 +20,8 @@ const CommentModal = ({
   postComment,
   commentData,
   getComments,
+  onSaveClick,
+  isSaved
 }) => {
   
 
@@ -97,7 +99,12 @@ const CommentModal = ({
                   <FaRegComment />
                   <LuShare2 />
                 </div>
-                <FaRegBookmark className="savemodal" />
+                <div
+                  onClick={onSaveClick}
+                  className="save-icon"
+                >
+                  {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                </div>
               </div>
               <p style={{ fontWeight: "bold" }}>{item.likes.length} likes</p>
               <p style={{ fontSize: "12px", color: "#969696" }}>

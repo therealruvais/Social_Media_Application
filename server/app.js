@@ -12,6 +12,7 @@ const errorHandler = require('./middleware/errorHandler')
 
 const authRoute = require('./routes/authRoute')
 const postRoute = require('./routes/postRoute')
+const notifyRoute = require('./routes/notifyRoute')
 
 const express = require("express");
 const app = express();
@@ -29,6 +30,7 @@ app.use(cookieParser());
 
 app.use('/api/user',authRoute)
 app.use('/api/post',postRoute)
+app.use("/api/notify", notifyRoute);
 
 
 

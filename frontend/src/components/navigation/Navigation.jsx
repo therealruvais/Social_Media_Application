@@ -5,6 +5,7 @@ import NavlistItem from "./NavlistItem";
 import CreateModal from "../createModel/CreateModal";
 
 import axios from "axios";
+import { NotifyContext } from "../../context/NotifyContext";
 axios.defaults.withCredentials = true;
 
 const Navigation = ({
@@ -14,11 +15,23 @@ const Navigation = ({
   handleNotifyToggle,
   notify,
   setNotify,
+  handleMessageToggle,
+  message,
+  setMessage,
 }) => {
   const [nav, setNav] = useState(NavData);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-   const [notificationCount3, setNotificationCount3] = useState(0);
-   const [notificationCount4, setNotificationCount4] = useState(0); 
+  const [notifyCount, setNotifyCount] = useState(0);
+
+  const { notifyData } = useContext(NotifyContext);
+
+  const isRead = async () => {
+    const { data } = await axios
+      .put(`http://localhost:1900/api/notify/read-all`)
+      .catch((err) => console.log(err));
+
+    return data;
+  };
 
   const handleModalToggle = () => {
     setModalIsOpen(true);
@@ -61,13 +74,21 @@ const Navigation = ({
     updateNavData();
   }, []);
 
-   const increaseNotificationCount3 = () => {
-     setNotificationCount3(notificationCount3 + 1);
-   };
+  
 
-   const increaseNotificationCount4 = () => {
-     setNotificationCount4(notificationCount4 + 1);
-   };
+  const numberOfnotification = () => {
+     const unreadNotifications = notifyData.filter((item) => !item.isRead);
+     setNotifyCount(unreadNotifications.length);
+  };
+
+  const handleReadClick = () => {
+    isRead();
+    setNotifyCount(0);
+  };
+
+  useEffect(() => {
+    numberOfnotification();
+  }, [notifyData]);
 
   return (
     <div className="sideMenu">
@@ -84,10 +105,11 @@ const Navigation = ({
             handleNotifyToggle={handleNotifyToggle}
             notify={notify}
             setNotify={setNotify}
-            notificationCount3={notificationCount3}
-            notificationCount4={notificationCount4}
-            increaseNotificationCount3={increaseNotificationCount3}
-            increaseNotificationCount4={increaseNotificationCount4}
+            handleMessageToggle={handleMessageToggle}
+            message={message}
+            setMessage={setMessage}
+            notifyCount={notifyCount}
+            handleReadClick={handleReadClick}
           />
         ))}
       </ul>

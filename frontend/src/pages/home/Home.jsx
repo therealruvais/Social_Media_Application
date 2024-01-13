@@ -1,55 +1,69 @@
-import React, { useContext, useEffect, useState } from 'react'
-import './home.css'
-import Post from '../../components/post/Post'
-import Followers from '../../components/followcard/Followers'
-import axios from 'axios'
-import { UserDataContext } from '../../context/UserDataContext'
+import React, { useContext, useEffect, useState } from "react";
+import "./home.css";
+import Post from "../../components/post/Post";
+import Followers from "../../components/followcard/Followers";
+import axios from "axios";
+import { UserDataContext } from "../../context/UserDataContext";
 import { HashLoader } from "react-spinners";
+import { NotifyContext } from "../../context/NotifyContext";
 axios.defaults.withCredentials = true;
 
- 
-
 const Home = () => {
+  const [loading, setLoading] = useState(true);
+  const [postData, setPostData] = useState([]);
 
-  const [loading, setLoading] = useState(true)
-  const [postData, setPostData] = useState([])
-  
-  const { setUserData } = useContext(UserDataContext)
+  const { setUserData } = useContext(UserDataContext);
+  const { setNotifyData } = useContext(NotifyContext);
+
   const user = async () => {
     const { data } = await axios
       .get(`http://localhost:1900/api/user/verify`, {
-        withCredentials:true,
+        withCredentials: true,
       })
       .catch((err) => console.log(err));
     setUserData(data.getaUser);
     return data;
   };
 
+  const getNotify = async () => {
+    const { data } = await axios
+      .get(`http://localhost:1900/api/notify/follow`, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(`error  fetching data`, err));
+    setNotifyData(data.notifications)
+    return data;
+  };
+
   const posts = async () => {
-    const { data } = await axios.get(`http://localhost:1900/api/post/homepost`, {
-      withCredentials:true,
-    }).catch(err => console.log('error fetching post data', err))
-    setPostData(data.posts)
+    const { data } = await axios
+      .get(`http://localhost:1900/api/post/homepost`, {
+        withCredentials: true,
+      })
+      .catch((err) => console.log("error fetching post data", err));
+    setPostData(data.posts);
     return data.posts;
-  }
+  };
 
   useEffect(() => {
-user()
-  .then(() => {
-    setLoading(false);
-  })
-  .catch((error) => {
-    console.error("Error fetching user data:", error);
-    setLoading(false);
-  });
-  }, [])
-  
-  useEffect(() => {
-   posts()
-  }, [])
+    user()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        setLoading(false);
+      });
+  }, []);
 
-  
-  
+  useEffect(() => {
+    posts();
+  }, []);
+
+  useEffect(() => {
+    getNotify()
+  },[])
+
   if (loading) {
     return (
       <div className="spinner-container">
@@ -79,6 +93,6 @@ user()
       </div>
     </div>
   );
-}
+};
 
-export default Home
+export default Home;
