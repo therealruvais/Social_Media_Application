@@ -26,6 +26,7 @@ const createPost = async (req, res) => {
     res.status(404).json({ error: "User not found" });
   }
 };
+
 const getPost = async (req, res) => {
   const post = await Post.find({}).populate("owner").sort({ createdAt: -1 });
   if (post) {
@@ -36,6 +37,7 @@ const getPost = async (req, res) => {
     res.status(404).json({ error: "Post not found" });
   }
 };
+
 const userFollowingPosts = async (req, res) => {
   const { id } = req.user;
   const user = await User.findById(id)
@@ -55,6 +57,7 @@ const userFollowingPosts = async (req, res) => {
 
   res.json({ posts });
 };
+
 const getUsersPost = async (req, res) => {
   const { username } = req.params;
 
@@ -69,6 +72,7 @@ const getUsersPost = async (req, res) => {
 
   res.json({ userPost });
 };
+
 const updatePost = async (req, res) => {
   const { id } = req.params;
   const newPost = await Post.findByIdAndUpdate(
@@ -85,6 +89,7 @@ const updatePost = async (req, res) => {
 
   res.json({ newPost });
 };
+
 const deletePost = async (req, res) => {
   const { id } = req.params;
   const deletedPost = await Post.findByIdAndDelete(id);
@@ -92,6 +97,7 @@ const deletePost = async (req, res) => {
 
   res.json({ msg: "success" });
 };
+
 const likeDislike = async (req, res) => {
   const { id } = req.user;
   const { postId } = req.params;
@@ -140,6 +146,7 @@ const likeDislike = async (req, res) => {
     res.json({ msg: "liked", likedislike });
   }
 };
+
 const addComment = async (req, res) => {
   const { id } = req.user;
   const { postId } = req.params;
@@ -178,6 +185,7 @@ const addComment = async (req, res) => {
 
   res.json({ msg: "success", comment: newComment });
 };
+
 const getAllComments = async (req, res) => {
   const { postId } = req.params;
   const post = await Post.findById(postId);
@@ -192,6 +200,7 @@ const getAllComments = async (req, res) => {
 
   res.json({ comments });
 };
+
 const deleteComment = async (req, res) => {
   const { id } = req.params;
   const comment = await Comment.findByIdAndDelete(id);
@@ -204,6 +213,7 @@ const deleteComment = async (req, res) => {
 
   res.json({ msg: "success" });
 };
+
 const savePost = async (req, res) => {
   const { id } = req.user;
   const { postId } = req.params;

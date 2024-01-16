@@ -40,6 +40,27 @@ const deleteNotification = async (req, res) => {
   res.json({ msg: "success", deleteNot });
 };
 
+const clearMessages = async (req, res) => {
+  const { id } = req.user;
+  const user = await User.findById(id).select("-password").populate({
+    path: "notifications",
+  });
+
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  const clearAllMessages = await Promise.all(
+    user.notifications.map(async (notification) => {
+      const deleteAll = await Notify.findOneAndDelete({ _id: notification._id });
+      return deleteAll;
+    })
+
+  )
+  res.json({msg:'success',clearAllMessages})
+
+}
+
 const readUnread = async (req, res) => {
   const { id } = req.params;
 
@@ -67,7 +88,6 @@ const read = async (req, res) => {
     return res.status(404).json({ error: "User not found" });
   }
 
-  // Iterate through user's notifications and update isRead
   const updatedNotifications = await Promise.all(
     user.notifications.map(async (notification) => {
       const updatedNotification = await Notify.findOneAndUpdate(
@@ -83,4 +103,10 @@ const read = async (req, res) => {
 };
 
 
-module.exports = { getNotification, deleteNotification, readUnread,read };
+module.exports = {
+  getNotification,
+  deleteNotification,
+  readUnread,
+  read,
+  clearMessages,
+};

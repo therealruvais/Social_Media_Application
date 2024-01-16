@@ -4,12 +4,12 @@ import SideBar from "./pages/sidebar/SideBar";
 import Home from "./pages/home/Home";
 import Explore from "./pages/explore/Explore";
 import Message from "./pages/messages/Message";
-import Profile from "./pages/profile/Profile";
 import { Routes, Route, useLocation } from "react-router-dom";
 import TextProvider from "./context/TextContext";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import { PacmanLoader } from "react-spinners";
+import ProfilePage from "./pages/profile/Profile";
 
 const App = () => {
   const location = useLocation();
@@ -60,7 +60,7 @@ const App = () => {
 
             <Route
               path="/profile/:username"
-              element={<Profile />}
+              element={<ProfilePage />}
             />
             <Route
               path="/"
@@ -70,6 +70,7 @@ const App = () => {
               path="/signup"
               element={<Signup />}
             />
+          
           </Routes>
         </div>
       </TextProvider>

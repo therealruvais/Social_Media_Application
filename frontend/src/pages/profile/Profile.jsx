@@ -11,11 +11,13 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 
-const Profile = () => {
+const ProfilePage = () => {
 
   const { username } = useParams();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
+  const [profileData, setProfileData] = useState([]);
+
 
 
   const [userPostData, setUserPostData] = useState([]);
@@ -40,6 +42,15 @@ const Profile = () => {
     return data
   }
 
+   const profile = async () => {
+     const { data } = await axios
+       .get(`http://localhost:1900/api/user/getuser/${username}`, {
+         withCredentials: true,
+       })
+       .catch((err) => console.log(err));
+     setProfileData([data.users]);
+     return data.users;
+   };
 
   const user = async () => {
     const { data } = await axios
@@ -51,6 +62,11 @@ const Profile = () => {
     setLoading(false)
     return data.getaUser;
   };
+
+  useEffect(() => {
+    profile();
+  }, [username]);
+
 
   useEffect(() => {
     user();
@@ -95,10 +111,15 @@ const Profile = () => {
   return (
     <div className="ProfileSec">
       <div className="profileCard">
-        <ProfileCard
-          username={username}
-          userPostData={userPostData}
-        />
+        {profileData.map((data) => (
+          <ProfileCard
+            username={username}
+            userPostData={userPostData}
+            user={data}
+            profile={profile}
+            profileData={profileData}
+          />
+        ))}
       </div>
       <div className="postCard">
         <PostCard
@@ -113,4 +134,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilePage;

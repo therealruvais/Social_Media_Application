@@ -13,6 +13,8 @@ const errorHandler = require('./middleware/errorHandler')
 const authRoute = require('./routes/authRoute')
 const postRoute = require('./routes/postRoute')
 const notifyRoute = require('./routes/notifyRoute')
+const chatRoute = require('./routes/chatRoute')
+const messageRoute = require('./routes/messageRoute')
 
 const express = require("express");
 const app = express();
@@ -31,6 +33,8 @@ app.use(cookieParser());
 app.use('/api/user',authRoute)
 app.use('/api/post',postRoute)
 app.use("/api/notify", notifyRoute);
+app.use("/api/chat", chatRoute);
+app.use("/api/message", messageRoute);
 
 
 

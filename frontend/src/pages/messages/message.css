@@ -2,7 +2,7 @@
   display: flex;
   gap: 1rem;
   width: 92vw;
-  height: 100%;
+  height: 100vh;
   padding: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 24px;
@@ -38,7 +38,7 @@
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  border-bottom: 1px solid #9999;
+  position: relative;
 }
 .muserim > img {
   width: 60px;
@@ -63,7 +63,7 @@
 }
 .mbodyuserim {
   display: flex;
-  align-items:center;
+  align-items: center;
   gap: 1rem;
   margin-top: 10px;
   margin-left: 5px;
@@ -76,10 +76,62 @@
 
 .Msbody {
   min-height: 80%;
-  overflow-y: auto;
+  width: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+}
+
+.userSec {
+  background: var(--color-light);
+  padding: 0.7rem;
+  border-radius: 1rem 1rem 1rem 0;
+  max-width: 28rem;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.userSec > span:nth-child(2) {
+  font-size: 0.7rem;
+  color: var(--color-dark);
+  align-self: end;
+}
+
+.own {
+  align-self: flex-end;
+  border-radius: 1rem 1rem 0 1rem;
+  background: var(--color-blue);
+  color: white;
+}
+
+.own > span:nth-child(2) {
+  font-size: 0.7rem;
+  color: var(--color-light);
+  align-self: end;
 }
 
 .MsInput {
   height: 10%;
-  border-top: 1px solid #9999;
+  display: flex;
+  align-items: center;
+}
+.MsInput > p {
+  color: var(--color-blue);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.online {
+  background-color: var(--color-blue);
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  left: 3rem;
+  top: .3rem;
 }

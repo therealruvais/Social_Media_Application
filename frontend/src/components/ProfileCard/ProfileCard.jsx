@@ -7,12 +7,18 @@ import EditModal from "./EditModal";
 import LogOutModal from "./LogOutModal";
 axios.defaults.withCredentials = true;
 
-const ProfileCard = ({ username, userPostData }) => {
-  const [profileData, setProfileData] = useState([]);
-
+const ProfileCard = ({
+  username,
+  userPostData,
+  user,
+  profile,
+  profileData,
+}) => {
   const [userData, setUserData] = useState(null);
   const [editModal, setEditModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
+  const [recieverId, setRecieverId] = useState(user._id);
+  console.log(recieverId)
   const fileRef = useRef();
 
   const uploadToCloudinary = async (imageFile) => {
@@ -33,6 +39,7 @@ const ProfileCard = ({ username, userPostData }) => {
       throw new Error("Failed to upload image to Cloudinary");
     }
   };
+
   const sendImageUrlToBackend = async (imageUrl) => {
     try {
       const response = await axios.put(
@@ -54,6 +61,7 @@ const ProfileCard = ({ username, userPostData }) => {
       console.error("Error updating image URL:", error);
     }
   };
+
   const onHandleChange = async (e) => {
     const selectedImage = e.target.files[0];
     try {
@@ -63,16 +71,8 @@ const ProfileCard = ({ username, userPostData }) => {
       console.log(`error handling image upload`, err);
     }
   };
-  const profile = async () => {
-    const { data } = await axios
-      .get(`http://localhost:1900/api/user/getuser/${username}`, {
-        withCredentials: true,
-      })
-      .catch((err) => console.log(err));
-    setProfileData([data.users])
-    return data.users;
-  };
-  const user = async () => {
+
+  const users = async () => {
     const { data } = await axios
       .get(`http://localhost:1900/api/user/verify`, {
         withCredentials: true,
@@ -80,12 +80,14 @@ const ProfileCard = ({ username, userPostData }) => {
       .catch((err) => console.log(err));
     return data.getaUser;
   };
+
   const followUnfollow = async () => {
     const { data } = await axios
       .put(`http://localhost:1900/api/user/followunfollow/${username}`)
       .catch((err) => console.log("error following user", err));
     return data;
   };
+
   const onHandleClick = () => {
     const updatedProfileData = profileData.map((profile) => {
       if (profile.username === username) {
@@ -117,119 +119,122 @@ const ProfileCard = ({ username, userPostData }) => {
       });
   };
 
+  const createChat = async () => {
+    const { data } = await axios
+      .post(`http://localhost:1900/api/chat`, {
+        senderId: userData?._id,
+        recieverId: recieverId,
+      })
+      .catch((err) => console.log(err));
+    console.log(data);
+    return data;
+  };
+
+  const onMessageClick = () => {
+    setRecieverId(user._id)
+     createChat();
+   };
+
   useEffect(() => {
-    user().then((data) => setUserData(data));
-    profile()
+    users().then((data) => setUserData(data));
   }, [username]);
 
   return (
-    <>
-      {profileData.map((user) => (
-        <div
-          className="proCard"
-          key={user?._id}
-        >
-          <div className="profileImg">
-            <div className="proImgSec">
-              <img
-                src={user.image}
-                alt=""
-                onClick={() => fileRef.current.click()}
-              />
-              {userData?.username === user.username ? (
-                <input
-                  type="file"
-                  ref={fileRef}
-                  onChange={onHandleChange}
-                  style={{ display: "none" }}
-                />
-              ) : undefined}
-            </div>
-          </div>
-          <div className="proName">
-            <div className="userName">
-              <p style={{ fontSize: "22px" }}>{user.username}</p>
-              {userData?.username === user.username ? (
-                <>
-                  <button
-                    className="ed-button"
-                    onClick={() => setEditModal(true)}
-                  >
-                    Edit Profile
-                  </button>
-                  <button className="ed-button"> View archives</button>
-                  <p style={{ fontSize: 22, cursor: "pointer" }}>
-                    <IoSettingsOutline onClick={() => setLogoutModal(true)} />
-                  </p>
-                </>
-              ) : (
-                <>
-                  {user?.followers?.some(
-                    (follower) => follower?._id === userData?._id
-                  ) ? (
-                    <button
-                      onClick={onHandleClick}
-                      className="ed-button"
-                    >
-                      Following
-                    </button>
-                  ) : (
-                    <button
-                      onClick={onHandleClick}
-                      className="ed-button"
-                    >
-                      Follow
-                    </button>
-                  )}
-                  <button className="ed-button">Message</button>
-                  <p style={{ fontSize: 22, cursor: "pointer" }}>
-                    <BsThreeDots />
-                  </p>
-                </>
-              )}
-            </div>
-            <div className="followernum">
-              <p>
-                <span style={{ fontWeight: "bold" }}>
-                  {userPostData.length}
-                </span>{" "}
-                posts
-              </p>
-              <p>
-                <span style={{ fontWeight: "bold" }}>
-                  {user.followers.length}
-                </span>{" "}
-                followers
-              </p>
-              <p>
-                <span style={{ fontWeight: "bold" }}>
-                  {user.following.length}
-                </span>{" "}
-                following
-              </p>
-            </div>
-            <div className="userN">
-              <p style={{ fontWeight: "bold", fontSize: "18px" }}>
-                {user.name}
-              </p>
-            </div>
-            <div className="Bio">
-              <p>{user.bio}</p>
-            </div>
-          </div>
-          <EditModal
-            editModal={editModal}
-            setEditModal={setEditModal}
-            user={user}
-            profile={profile}
+    <div
+      className="proCard"
+      key={user?._id}
+    >
+      <div className="profileImg">
+        <div className="proImgSec">
+          <img
+            src={user.image}
+            alt=""
+            onClick={() => fileRef.current.click()}
           />
-          <LogOutModal
-            logoutModal={logoutModal}
-            setLogoutModal={setLogoutModal}
-          />
+          {userData?.username === user.username ? (
+            <input
+              type="file"
+              ref={fileRef}
+              onChange={onHandleChange}
+              style={{ display: "none" }}
+            />
+          ) : undefined}
         </div>
-      ))}
-    </>
+      </div>
+      <div className="proName">
+        <div className="userName">
+          <p style={{ fontSize: "22px" }}>{user.username}</p>
+          {userData?.username === user.username ? (
+            <>
+              <button
+                className="ed-button"
+                onClick={() => setEditModal(true)}
+              >
+                Edit Profile
+              </button>
+              <button className="ed-button"> View archives</button>
+              <p style={{ fontSize: 22, cursor: "pointer" }}>
+                <IoSettingsOutline onClick={() => setLogoutModal(true)} />
+              </p>
+            </>
+          ) : (
+            <>
+              {user?.followers?.some(
+                (follower) => follower?._id === userData?._id
+              ) ? (
+                <button
+                  onClick={onHandleClick}
+                  className="ed-button"
+                >
+                  Following
+                </button>
+              ) : (
+                <button
+                  onClick={onHandleClick}
+                  className="ed-button"
+                >
+                  Follow
+                </button>
+              )}
+              <button onClick={onMessageClick} className="ed-button">Message</button>
+              <p style={{ fontSize: 22, cursor: "pointer" }}>
+                <BsThreeDots />
+              </p>
+            </>
+          )}
+        </div>
+        <div className="followernum">
+          <p>
+            <span style={{ fontWeight: "bold" }}>{userPostData.length}</span>{" "}
+            posts
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>{user.followers.length}</span>{" "}
+            followers
+          </p>
+          <p>
+            <span style={{ fontWeight: "bold" }}>{user.following.length}</span>{" "}
+            following
+          </p>
+        </div>
+        <div className="userN">
+          <p style={{ fontWeight: "bold", fontSize: "18px" }}>{user.name}</p>
+        </div>
+        <div className="Bio">
+          <p>{user.bio}</p>
+        </div>
+      </div>
+      <EditModal
+        editModal={editModal}
+        setEditModal={setEditModal}
+        user={user}
+        profile={profile}
+      />
+      <LogOutModal
+        logoutModal={logoutModal}
+        setLogoutModal={setLogoutModal}
+      />
+    </div>
   );
 };
 

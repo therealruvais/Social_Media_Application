@@ -23,6 +23,7 @@ const createUser = async (req, res) => {
   await user.save();
   res.json(user);
 };
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   const findUser = await User.findOne({ email });
@@ -43,17 +44,20 @@ const loginUser = async (req, res) => {
   });
   res.json({ msg: "success", userToken });
 };
+
 const getUser = async (req, res) => {
   const { id } = req.user;
   const getaUser = await User.findById(id, "-password");
   if (!getaUser) throw new Error("User not found");
   res.json({ msg: "success", getaUser });
 };
+
 const getAllusers = async (req, res) => {
   const getallUsers = await User.find({}).select("-password");
   if (!getallUsers) throw new Error(`no users found`);
   res.json(getallUsers);
 };
+
 const refreshToken = (req, res, next) => {
   const cookie = req.headers.cookie;
   if (!cookie) throw new Error("cookie not found");
@@ -79,6 +83,7 @@ const refreshToken = (req, res, next) => {
   });
   next();
 };
+
 const logOut = async (req, res) => {
   const { id } = req.user;
   const findUser = await User.findById(id, "-password");
@@ -87,6 +92,7 @@ const logOut = async (req, res) => {
   req.cookies[`${findUser.id}`] = "";
   res.json({ msg: "user loggedout" });
 };
+
 const searchUser = async (req, res) => {
   try {
     const users = await User.find({ username: { $regex: req.query.username } })
@@ -98,6 +104,7 @@ const searchUser = async (req, res) => {
     return res.status(500).json({ msg: "failed" });
   }
 };
+
 const getProfileUser = async (req, res) => {
   const { username } = req.params;
   const users = await User.findOne({ username })
@@ -106,6 +113,7 @@ const getProfileUser = async (req, res) => {
   if (!users) throw new Error("no user found");
   res.json({ users });
 };
+
 const updateUser = async (req, res) => {
   const { id } = req.user;
 
@@ -125,6 +133,7 @@ const updateUser = async (req, res) => {
   if (!newUser) throw new Error("cannot update user try again");
   res.json({ newUser });
 };
+
 const updateImage = async (req, res) => {
   const { id } = req.user;
   try {
@@ -202,6 +211,13 @@ const followUnfollow = async (req, res) => {
   }
 };
 
+const getOneUser = async (req,res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).select("-password");
+  if (!user) throw new Error('user not found')
+  res.json(user)
+}
+
 
 
 module.exports = {
@@ -216,4 +232,5 @@ module.exports = {
   updateUser,
   followUnfollow,
   updateImage,
+  getOneUser,
 };
