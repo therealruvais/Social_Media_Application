@@ -35,6 +35,9 @@ io.on("connection", (socket) => {
 
     if (user) {
       io.to(user.socketId).emit("recieve-message", data);
+      console.log("Sent recieve-message event to:", user.userId);
+      console.log("Sent event to socket id:", user.socketId);
+      console.log("Data:", data);
       console.log("Message sent successfully");
     } else {
       console.log("Recipient user not found");

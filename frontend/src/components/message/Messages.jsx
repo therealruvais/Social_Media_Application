@@ -10,9 +10,7 @@ const Messages = ({ chat, userData, setSendMessage, recieveMessage }) => {
   const [messages, setMessages] = useState([]);
   const [newMessages, setNewMessages] = useState("");
 
-  const scroll = useRef()
- 
-
+  const scroll = useRef();
 
   useEffect(() => {
     const getChatUsers = async () => {
@@ -47,38 +45,44 @@ const Messages = ({ chat, userData, setSendMessage, recieveMessage }) => {
     getMessages();
   }, [chat]);
 
-  
   const onHandleChange = (newMessages) => {
     setNewMessages(newMessages);
   };
 
   const onSend = async (e) => {
     e.preventDefault();
+
+    const message = {
+      senderId: userData._id,
+      text: newMessages,
+      chatId: chat._id,
+    };
+    const recieverId = chat.members.find((id) => id !== userData._id);
+    setSendMessage({ ...message, recieverId });
+
     try {
-      const { data } = await axios.post(`http://localhost:1900/api/message`, {
-        senderId: userData._id,
-        text: newMessages,
-        chatId: chat?._id,
-      });
+      const { data } = await axios.post(
+        `http://localhost:1900/api/message`,
+        message
+      );
       setMessages([...messages, data]);
       setNewMessages("");
     } catch (error) {
       console.log(error);
     }
     // send to socket
-    const recieverId = chat?.members?.find((id) => id !== userData._id);
-    setSendMessage({ ...messages, recieverId });
   };
 
-   useEffect(() => {
-     if (recieveMessage !== null && recieveMessage?.chatId === chat?._id) {
-       setMessages([...messages, recieveMessage]);
-     }
-   }, [recieveMessage]);
+  useEffect(() => {
+    if (recieveMessage !== null && recieveMessage.chatId === chat?._id) {
+      console.log("Messages component re-rendered", recieveMessage);
+      setMessages([...messages, recieveMessage]);
+    }
+  }, [recieveMessage]);
 
   useEffect(() => {
-    scroll.current?.scrollIntoView({behavior:"smooth"})
-  },[messages])
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="Mesright">

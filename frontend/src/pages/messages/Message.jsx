@@ -13,7 +13,7 @@ const Message = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [sendMessage, setSendMessage] = useState(null);
   const [recieveMessage, setRecieveMessage] = useState(null);
-  // console.log(recieveMessage);
+
   // console.log(userData)
 
   const socket = useRef();
@@ -34,6 +34,7 @@ const Message = () => {
 
   useEffect(() => {
     socket.current = io("http://localhost:8000");
+    console.log('socket connected');
     socket.current.emit("new-user-add", userData._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
@@ -43,6 +44,7 @@ const Message = () => {
   // sendmessage
   useEffect(() => {
     if (sendMessage !== null) {
+      console.log("Sending message:", sendMessage);
       socket.current.emit("send-message", sendMessage);
     }
   }, [sendMessage]);
@@ -50,6 +52,7 @@ const Message = () => {
   //recieve message
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
+      console.log("Received recieve-message event:", data);
       setRecieveMessage(data);
     });
   }, []);
