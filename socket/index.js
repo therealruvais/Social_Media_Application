@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
     console.log("Found user:", user);
 
     if (user) {
-      io.to(user.socketId).emit("recieve-message", data);
+      io.to(user.socketId).emit("recieved-message", data);
       console.log("Sent recieve-message event to:", user.userId);
       console.log("Sent event to socket id:", user.socketId);
       console.log("Data:", data);

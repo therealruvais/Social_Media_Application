@@ -32,6 +32,26 @@ const Message = () => {
     user();
   }, []);
 
+  
+  useEffect(() => {
+    const getChats = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:1900/api/chat/user`,
+          {
+            withCredentials: true,
+          }
+        );
+        setChats(data);
+        // console.log(data)
+        return data;
+      } catch (error) {
+        console.log(error, "cannot get users chat");
+      }
+    };
+    getChats();
+  }, [userData._id]);
+
   useEffect(() => {
     socket.current = io("http://localhost:8000");
     console.log('socket connected');
@@ -51,30 +71,12 @@ const Message = () => {
 
   //recieve message
   useEffect(() => {
-    socket.current.on("recieve-message", (data) => {
+    socket.current.on("recieved-message", (data) => {
       console.log("Received recieve-message event:", data);
       setRecieveMessage(data);
     });
   }, []);
 
-  useEffect(() => {
-    const getChats = async () => {
-      try {
-        const { data } = await axios.get(
-          `http://localhost:1900/api/chat/user`,
-          {
-            withCredentials: true,
-          }
-        );
-        setChats(data);
-        // console.log(data)
-        return data;
-      } catch (error) {
-        console.log(error, "cannot get users chat");
-      }
-    };
-    getChats();
-  }, [userData._id]);
 
   return (
     <div className="messageSection">

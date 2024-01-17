@@ -122,7 +122,7 @@ const Messages = ({ chat, userData, setSendMessage, recieveMessage }) => {
           </div>
         </>
       ) : (
-        <span className="chatbox-empty-message">
+        <span className="chatbox">
           Tap on a chat to start conversation...
         </span>
       )}
