@@ -6,7 +6,7 @@ import axios from 'axios';
 import ConverSation from './ConverSation';
 axios.defaults.withCredentials = true
 
-const Users = ({ userData, chats, setCurrentChats }) => {
+const Users = ({ userData, chats, setCurrentChats, checkOnlineStatus }) => {
   return (
     <div className="Mesleft">
       <div className="Meshead">
@@ -16,17 +16,17 @@ const Users = ({ userData, chats, setCurrentChats }) => {
       <div className="Mesusers">
         {chats.map((chat) => (
           <div
-      className="muserim"
-      style={{ cursor: "pointer" }}
-     onClick={() => setCurrentChats(chat)}
-    >
-          <ConverSation
-            key={chat._id}
-            data={chat}
-            userData={userData}
-            setCurrentChats={setCurrentChats}
+            className="muserim"
+            style={{ cursor: "pointer" }}
+            onClick={() => setCurrentChats(chat)}
+          >
+            <ConverSation
+              key={chat._id}
+              data={chat}
+              userData={userData}
+              online={checkOnlineStatus(chat)}
             />
-            </div>
+          </div>
         ))}
       </div>
     </div>

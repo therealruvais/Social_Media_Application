@@ -118,6 +118,7 @@ const ProfilePage = () => {
             user={data}
             profile={profile}
             profileData={profileData}
+            setProfileData={setProfileData}
           />
         ))}
       </div>

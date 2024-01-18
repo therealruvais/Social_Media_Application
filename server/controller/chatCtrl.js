@@ -1,12 +1,14 @@
 const Chat = require('../model/chatModel')
 
 
-const createChat = async (req,res) => {
+const createChat = async (req, res) => {
+    
     const newChat = new Chat({
         members:[req.body.senderId,req.body.recieverId]
     })
     await newChat.save()
-    res.json({msg:"sucess",newChat});
+
+    res.json({msg:"success",newChat});
 }
 
 

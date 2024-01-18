@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./sidebar.css";
 import Navigation from "../../components/navigation/Navigation";
 import SearchComponent from "../../components/Search/SearchComponent";
 import logo from "../../socialmedia/Logo.png";
 import Notification from "../../components/notification/Notification";
+import { useLocation, useParams } from "react-router-dom";
 
 const SideBar = () => {
   const [search, setSearch] = useState(false);
   const [notify, setNotify] = useState(false);
   const [message, setMessage] = useState(false);
+   const { mesage } = useParams();
+  const location = useLocation();
+  
+  useEffect(() => {
+     const isMessagePage = location.pathname.includes("message");
+     const isMessageParam = mesage === "message";
+     setMessage(isMessagePage || isMessageParam);
+     localStorage.setItem(
+       "messageState",
+       JSON.stringify(isMessagePage || isMessageParam)
+     );
+  },[mesage,location])
 
   const handleMessageToggle = () => {
     setMessage(!message)
+    localStorage.setItem("messageState", JSON.stringify(!message));
   }
 
   const handleNotifyToggle = () => {

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import uimg from "../../socialmedia/avatar/avatar2.jpg";
 import axios from "axios"
 axios.defaults.withCredentials = true;
 
-const ConverSation = ({ data, userData, setCurrentChats }) => {
+const ConverSation = ({ data, userData, online }) => {
   const [chatUser, setChatUser] = useState(null);
 
   useEffect(() => {
     const getChatUsers = async () => {
       try {
-        const chatUserId = data.members.find((id) => id !== userData._id);
+        const chatUserId = data?.members?.find((id) => id !== userData._id);
         const { data: chatUserData } = await axios.get(
           `http://localhost:1900/api/user/getoneuser/${chatUserId}`,
           {
@@ -35,9 +34,9 @@ const ConverSation = ({ data, userData, setCurrentChats }) => {
       />
       <div>
         <p style={{ fontSize: 24, marginTop: 9 }}>{chatUser?.username}</p>
-        <span>online</span>
+        <span>{online ? "online" : "offline"}</span>
       </div>
-      <div className="online"></div>
+     {online && <div className="online"></div>}
     </>
   );
 };

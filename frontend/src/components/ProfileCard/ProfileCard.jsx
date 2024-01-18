@@ -5,6 +5,7 @@ import { BsThreeDots } from "react-icons/bs";
 import axios from "axios";
 import EditModal from "./EditModal";
 import LogOutModal from "./LogOutModal";
+import { useNavigate } from "react-router-dom";
 axios.defaults.withCredentials = true;
 
 const ProfileCard = ({
@@ -13,13 +14,14 @@ const ProfileCard = ({
   user,
   profile,
   profileData,
+  setProfileData,
 }) => {
   const [userData, setUserData] = useState(null);
   const [editModal, setEditModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
   const [recieverId, setRecieverId] = useState(user._id);
-  console.log(recieverId)
   const fileRef = useRef();
+  const navigate = useNavigate()
 
   const uploadToCloudinary = async (imageFile) => {
     const data = new FormData();
@@ -127,13 +129,16 @@ const ProfileCard = ({
       })
       .catch((err) => console.log(err));
     console.log(data);
+    if (data.msg === 'success') {
+      navigate('/message')
+    }
     return data;
   };
 
   const onMessageClick = () => {
-    setRecieverId(user._id)
-     createChat();
-   };
+    setRecieverId(user._id);
+    createChat();
+  };
 
   useEffect(() => {
     users().then((data) => setUserData(data));
@@ -196,7 +201,12 @@ const ProfileCard = ({
                   Follow
                 </button>
               )}
-              <button onClick={onMessageClick} className="ed-button">Message</button>
+              <button
+                onClick={onMessageClick}
+                className="ed-button"
+              >
+                Message
+              </button>
               <p style={{ fontSize: 22, cursor: "pointer" }}>
                 <BsThreeDots />
               </p>

@@ -5,7 +5,14 @@ import { format } from "timeago.js";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const Messages = ({ chat, userData, setSendMessage, recieveMessage }) => {
+
+const Messages = ({
+  chat,
+  userData,
+  setSendMessage,
+  recieveMessage,
+ 
+}) => {
   const [chatUser, setChatUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessages, setNewMessages] = useState("");
@@ -75,7 +82,6 @@ const Messages = ({ chat, userData, setSendMessage, recieveMessage }) => {
 
   useEffect(() => {
     if (recieveMessage !== null && recieveMessage.chatId === chat?._id) {
-      console.log("Messages component re-rendered", recieveMessage);
       setMessages([...messages, recieveMessage]);
     }
   }, [recieveMessage]);
@@ -122,9 +128,17 @@ const Messages = ({ chat, userData, setSendMessage, recieveMessage }) => {
           </div>
         </>
       ) : (
-        <span className="chatbox">
-          Tap on a chat to start conversation...
-        </span>
+        <div className="chatbox">
+          <div className="chatImg">
+            <img
+              src="https://res.cloudinary.com/ddwuuorpm/image/upload/v1705536795/message_f7egxr.png"
+              alt="message"
+            />
+          </div>
+          <span style={{ alignSelf: "center", fontWeight: "bold" }}>
+            Tap on a chat to start conversation...
+          </span>
+        </div>
       )}
     </div>
   );

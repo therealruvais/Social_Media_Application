@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./message.css";
 import Users from "../../components/message/Users";
 import Messages from "../../components/message/Messages";
 import { io } from "socket.io-client";
 import axios from "axios";
+import { UserDataContext } from "../../context/UserDataContext";
 axios.defaults.withCredentials = true;
 
 const Message = () => {
-  const [userData, setUserData] = useState([]);
+  // const [userData, setUserData] = useState([]);
   const [chats, setChats] = useState([]);
   const [currentChats, setCurrentChats] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -15,22 +16,9 @@ const Message = () => {
   const [recieveMessage, setRecieveMessage] = useState(null);
 
   // console.log(userData)
+  const {userData} = useContext(UserDataContext)
 
   const socket = useRef();
-
-  const user = async () => {
-    const { data } = await axios
-      .get(`http://localhost:1900/api/user/verify`, {
-        withCredentials: true,
-      })
-      .catch((err) => console.log(err));
-    setUserData(data.getaUser);
-    return data.getaUser;
-  };
-
-  useEffect(() => {
-    user();
-  }, []);
 
   
   useEffect(() => {
@@ -71,11 +59,18 @@ const Message = () => {
 
   //recieve message
   useEffect(() => {
-    socket.current.on("recieved-message", (data) => {
+    socket.current.on("received-message", (data) => {
       console.log("Received recieve-message event:", data);
       setRecieveMessage(data);
     });
+    console.log('checking')
   }, []);
+
+  const checkOnlineStatus = (chat) => {
+    const chatMember = chat.members.find((member) => member !== userData._id)
+    const online = onlineUsers.find((user) => user.userId === chatMember)
+    return online ? true : false
+  }
 
 
   return (
@@ -85,6 +80,7 @@ const Message = () => {
           userData={userData}
           chats={chats}
           setCurrentChats={setCurrentChats}
+          checkOnlineStatus={checkOnlineStatus}
         />
         <Messages
           chat={currentChats}
