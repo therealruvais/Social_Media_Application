@@ -21,7 +21,7 @@ const ProfileCard = ({
   const [logoutModal, setLogoutModal] = useState(false);
   const [recieverId, setRecieverId] = useState(user._id);
   const fileRef = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const uploadToCloudinary = async (imageFile) => {
     const data = new FormData();
@@ -129,8 +129,8 @@ const ProfileCard = ({
       })
       .catch((err) => console.log(err));
     console.log(data);
-    if (data.msg === 'success') {
-      navigate('/message')
+    if (data.msg === "success" || "exists") {
+      navigate("/message");
     }
     return data;
   };
@@ -232,6 +232,21 @@ const ProfileCard = ({
         </div>
         <div className="Bio">
           <p>{user.bio}</p>
+        </div>
+        <div className="Bio">
+          {user.website !== "" ? (
+            <p>
+              <a
+                style={{ textDecoration: "none", color: "var(--color-blue)" }}
+                href={`${user.website}`}
+                target="_blank"
+              >
+                Website 🌎
+              </a>
+            </p>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <EditModal

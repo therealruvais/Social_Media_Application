@@ -81,7 +81,7 @@ const Messages = ({
   };
 
   useEffect(() => {
-    if (recieveMessage !== null && recieveMessage.chatId === chat?._id) {
+    if (recieveMessage !== null && recieveMessage?.chatId === chat?._id) {
       setMessages([...messages, recieveMessage]);
     }
   }, [recieveMessage]);
@@ -89,6 +89,22 @@ const Messages = ({
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const clearMessages = async () => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:1900/api/message/delete/${chat?._id}`
+      );
+      console.log(data)
+      setMessages([])
+    } catch (error) {
+      console.error("Error clearing messages:", error.message);
+    }
+  }
+
+  const handleDelete = () => {
+    clearMessages()
+  }
 
   return (
     <div className="Mesright">
@@ -101,9 +117,12 @@ const Messages = ({
                 alt="chat user"
               />
               <div>
-                <p style={{ fontWeight: "bold" }}>{chatUser?.username}</p>
+                <p style={{ fontWeight: "bold"}}>{chatUser?.username}</p>
               </div>
             </div>
+            <div>
+              <p onClick={handleDelete} className="clearMsg" style={{color:'var(--color-blue)'}}>Clear all</p>
+           </div>
           </div>
           <div className="Msbody">
             {messages.map((message) => (

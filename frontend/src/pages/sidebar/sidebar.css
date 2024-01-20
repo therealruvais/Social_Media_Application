@@ -14,25 +14,41 @@
   transition: 0.5s ease-out;
 }
 
-.sidebar.active{
+.sidebar.active {
   width: 35%;
 }
-.sidebar.message{
-  width:8%;
+.sidebar.message {
+  width: 8%;
 }
-.Searchbar{
+.Searchbar {
   width: 100%;
 }
-.Searchbar.active{
- display: none;
+.Searchbar.active {
+  display: none;
 }
-.LogoImg{
+.LogoImg {
   width: 3rem;
   height: 3rem;
 }
 
-.Simg>img{
+.Simg > img {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 20%;
+    height: 100%;
+  }
+  .sidebar.active {
+    width: 70vw;
+  }
+  .LogoImg {
+    display: none;
+  }
+  .appName {
+    display: none;
+  }
 }

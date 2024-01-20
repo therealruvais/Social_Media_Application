@@ -8,4 +8,13 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 24px;
   margin-left: 25%;
+  position: relative;
 }
+
+@media screen and (max-width:768px){
+  .exploreSec{
+    position: relative;
+    width: 100vw;
+    margin-left: 20%;
+  }
+ }

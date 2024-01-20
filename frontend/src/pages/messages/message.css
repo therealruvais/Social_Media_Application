@@ -60,6 +60,9 @@
 .Mesrhead {
   height: 10%;
   border-bottom: 1px solid #9999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .mbodyuserim {
   display: flex;
@@ -72,6 +75,12 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.clearMsg{
+  margin-right: 20px;
+  cursor: pointer;
 }
 
 .Msbody {

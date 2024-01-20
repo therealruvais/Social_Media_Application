@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect,  useState } from "react";
 import "./post.css";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegHeart, FaRegBookmark, FaHeart, FaBookmark } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { TextContext } from "../../context/TextContext";
 import CommentModal from "../modal/CommentModal";
 import { UserDataContext } from "../../context/UserDataContext";
 import axios from "axios";
+import ShareModel from "./ShareModel";
 axios.defaults.withCredentials = true;
 
 const Post = ({ item, posts, user }) => {
@@ -15,6 +16,7 @@ const Post = ({ item, posts, user }) => {
   const [postId, setPostId] = useState(item._id);
   const [comments, setComments] = useState("");
   const [commentData, setCommentData] = useState([]);
+  const [isShare, setIsShare] = useState(false);
 
   const { userData } = useContext(UserDataContext);
 
@@ -163,8 +165,13 @@ const Post = ({ item, posts, user }) => {
                 </div>
 
                 <FaRegComment onClick={handleModalToggle} />
-                <LuShare2 />
+                <LuShare2 onClick={() => setIsShare(!isShare)} />
               </div>
+              {isShare && (
+                <ShareModel
+                  shareUrl={`http://localhost:5173/profile/${item.owner.username}`}
+                />
+              )}
               <div
                 onClick={onSaveClick}
                 className="save-icon"

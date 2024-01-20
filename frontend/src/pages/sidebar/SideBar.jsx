@@ -45,7 +45,7 @@ const SideBar = () => {
               alt=""
             />
           ) : (
-            <h2 style={{ marginLeft: 13 }}>
+            <h2 className="appName" style={{ marginLeft: 13 }}>
               <i>PicHub</i>
             </h2>
           )}

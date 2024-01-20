@@ -1,4 +1,4 @@
-.modalForPost {
+.modalForC {
   width: 50%;
   height: 80vh;
   margin: auto;
@@ -120,4 +120,12 @@ position: relative;
 
 .commentreply > p:nth-child(3) {
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px){
+  .modalForPost{
+    width: 50vh;
+    height: 60vh;
+    padding: 0;
+  }
 }

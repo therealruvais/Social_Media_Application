@@ -99,3 +99,10 @@
 .liked-icon {
   color: red;
 }
+
+@media screen and (max-width: 768px){
+  .postContainer{
+    width: 80%;
+  
+  }
+}

@@ -23,20 +23,26 @@ nav {
   /* border-top: 1px solid var(--color-blue); */
 }
 
-.postcContainer{
+.postcContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
 }
 .editImgC {
-width: 33%; 
-max-height: 21rem;
-border: 1px solid #9999;
-
+  width: 33%;
+  max-height: 21rem;
+  border: 1px solid #9999;
 }
 
 .editImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .editImgC {
+    width: 48%;
+    border: 1px solid #9999;
+  }
 }

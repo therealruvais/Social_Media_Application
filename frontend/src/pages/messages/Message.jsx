@@ -16,11 +16,10 @@ const Message = () => {
   const [recieveMessage, setRecieveMessage] = useState(null);
 
   // console.log(userData)
-  const {userData} = useContext(UserDataContext)
+  const { userData } = useContext(UserDataContext);
 
   const socket = useRef();
 
-  
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -42,7 +41,7 @@ const Message = () => {
 
   useEffect(() => {
     socket.current = io("http://localhost:8000");
-    console.log('socket connected');
+    console.log("socket connected");
     socket.current.emit("new-user-add", userData._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
@@ -63,15 +62,13 @@ const Message = () => {
       console.log("Received recieve-message event:", data);
       setRecieveMessage(data);
     });
-    console.log('checking')
   }, []);
 
   const checkOnlineStatus = (chat) => {
-    const chatMember = chat.members.find((member) => member !== userData._id)
-    const online = onlineUsers.find((user) => user.userId === chatMember)
-    return online ? true : false
-  }
-
+    const chatMember = chat.members.find((member) => member !== userData._id);
+    const online = onlineUsers.find((user) => user.userId === chatMember);
+    return online ? true : false;
+  };
 
   return (
     <div className="messageSection">
