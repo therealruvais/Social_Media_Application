@@ -18,6 +18,21 @@ const getMessage = async (req,res) => {
   res.json(result)
 }
 
+const deleteMessage = async (req, res) => {
+  const { chatId } = req.params;
+  const deleted = await Message.deleteMany({chatId});
+  if (!deleted) throw new Error('cannot delete msg');
+  
+  res.json({msg:'sucess', deleted});
+
+}
+
+const deleteOne = async (req, res) => {
+  const { messageId } = req.params;
+  const deleted = await Message.findByIdAndDelete(messageId);
+  if (!deleted) throw new Error("cannot delete msg");
+  res.json({msg:'success', deleted})
+}
 
 
-module.exports = {addMessage,getMessage}
+module.exports = { addMessage, getMessage, deleteMessage, deleteOne };

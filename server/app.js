@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const port = process.env.PORT || 2024;
 const connectDB = require("./DB/connectDB");
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 
 
 const notFound = require('./middleware/notFound')
@@ -19,9 +19,9 @@ const messageRoute = require('./routes/messageRoute')
 const express = require("express");
 const app = express();
 
-// app.use(express.json());
-app.use(bodyParser.json({limit:"50mb"}));
-app.use(bodyParser.urlencoded({limit:"50mb", extended: true }))
+app.use(express.json());
+// app.use(bodyParser.json({limit:"50mb"}));
+// app.use(bodyParser.urlencoded({limit:"50mb", extended: true }))
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -37,13 +37,13 @@ app.use("/api/chat", chatRoute);
 app.use("/api/message", messageRoute);
 
 
+app.get('/', (req, res) => {
+    res.send('hello')
+})
 
 app.use(notFound)
 app.use(errorHandler)
 
-app.get('/', (req, res) => {
-    res.send('hello')
-})
 
 const start = async () => {
   try {

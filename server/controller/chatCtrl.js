@@ -2,14 +2,24 @@ const Chat = require('../model/chatModel')
 
 
 const createChat = async (req, res) => {
-    
+    const existingChat = await Chat.findOne({
+        members: { $all: [req.body.senderId, req.body.recieverId] }
+    });
+
+    if (existingChat) {
+        return res.json({ msg: "exists", existingChat });
+    }
+
     const newChat = new Chat({
-        members:[req.body.senderId,req.body.recieverId]
+        members: [req.body.senderId, req.body.recieverId]
     })
+
     await newChat.save()
 
-    res.json({msg:"success",newChat});
+    res.json({ msg: "success", newChat });
 }
+
+
 
 
 const usersChats = async (req, res) => {
@@ -27,5 +37,11 @@ const findChat = async (req, res) => {
      res.json(chat);
 }
 
+const deleteChat = async (req, res) => {
+    const { chatId } = req.params;
+    const deleted = await Chat.findByIdAndDelete(chatId);
+    if (!deleted) throw new Error('canot find chat');
+    res.json({msg:'success',deleted})
+}
 
-module.exports = { createChat, usersChats, findChat };
+module.exports = { createChat, usersChats, findChat, deleteChat };
