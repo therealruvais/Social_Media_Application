@@ -112,11 +112,11 @@
 }
 @media screen and (max-width:768px) {
   .PostEditModal {
-    width: 50vw;
+    width: 70vw;
     height: 60vh;
   }
   .PostEditModal.active {
-    width: 25vw;
+    width: 35vw;
     height: 45vh;
   }
 }

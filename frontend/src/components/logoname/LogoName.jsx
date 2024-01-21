@@ -47,7 +47,7 @@ const LogoName = () => {
         <span>@{userData.username}</span>
       </div>
       <div onClick={handleLogout} className="switchAc">
-        <p>log out</p>
+        <p style={{cursor:'pointer'}}>log out</p>
       </div>
     </div>
   );

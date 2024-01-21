@@ -39,7 +39,7 @@ const Message = () => {
   }, [userData._id]);
 
   useEffect(() => {
-    socket.current = io("http://localhost:8000");
+    socket.current = io("https://pichub-socket.onrender.com");
     console.log("socket connected");
     socket.current.emit("new-user-add", userData._id);
     socket.current.on("get-users", (users) => {
