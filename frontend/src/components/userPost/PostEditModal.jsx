@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./postEditModal.css";
 import Modal from "react-modal";
-
-import axios from "axios";
+import axios from '../../axios-config'
 
 const PostEditModal = ({
   openPostModal,
@@ -19,7 +18,7 @@ const PostEditModal = ({
 
   const updatePost = async () => {
     const { data } = await axios
-      .put(`http://localhost:1900/api/post/update/${postId}`, {
+      .put(`/post/update/${postId}`, {
         desc,
       })
       .catch((err) => console.log(err));
@@ -28,7 +27,7 @@ const PostEditModal = ({
 
   const deletePost = async () => {
     const { data } = await axios
-      .delete(`http://localhost:1900/api/post/delete/${postId}`)
+      .delete(`/post/delete/${postId}`)
       .catch((err) => console.log("cannot delete post", err));
     userPostdata()
     return data;
@@ -42,7 +41,7 @@ const PostEditModal = ({
 
   const onDeleteClick = () => {
     deletePost().then((data) => {
-      console.log(data);
+      console.log(data.msg);
     });
   };
 

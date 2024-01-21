@@ -4,9 +4,8 @@ import "./navigation.css";
 import NavlistItem from "./NavlistItem";
 import CreateModal from "../createModel/CreateModal";
 
-import axios from "axios";
+import axios from '../../axios-config'
 import { NotifyContext } from "../../context/NotifyContext";
-axios.defaults.withCredentials = true;
 
 const Navigation = ({
   handleSearchToggle,
@@ -27,7 +26,7 @@ const Navigation = ({
 
   const isRead = async () => {
     const { data } = await axios
-      .put(`http://localhost:1900/api/notify/read-all`)
+      .put(`/notify/read-all`)
       .catch((err) => console.log(err));
 
     return data;
@@ -47,7 +46,7 @@ const Navigation = ({
   };
   const user = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/user/verify`, {
+      .get(`/user/verify`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));

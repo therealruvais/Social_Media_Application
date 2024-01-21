@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "../../pages/messages/message.css";
 import InputEmoji from "react-input-emoji";
 import { format } from "timeago.js";
-import axios from "axios";
-axios.defaults.withCredentials = true;
+import axios from "../../axios-config";
 
 
 const Messages = ({
@@ -24,7 +23,7 @@ const Messages = ({
       try {
         const chatUserId = chat?.members?.find((id) => id !== userData?._id);
         const { data: chatUserData } = await axios.get(
-          `http://localhost:1900/api/user/getoneuser/${chatUserId}`,
+          `/user/getoneuser/${chatUserId}`,
           {
             withCredentials: true,
           }
@@ -41,7 +40,7 @@ const Messages = ({
   useEffect(() => {
     const getMessages = async () => {
       const { data } = await axios
-        .get(`http://localhost:1900/api/message/${chat?._id}`, {
+        .get(`/message/${chat?._id}`, {
           withCredentials: true,
         })
         .catch((err) => console.log(err));
@@ -69,7 +68,7 @@ const Messages = ({
 
     try {
       const { data } = await axios.post(
-        `http://localhost:1900/api/message`,
+        `/message`,
         message
       );
       setMessages([...messages, data]);
@@ -93,7 +92,7 @@ const Messages = ({
   const clearMessages = async () => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:1900/api/message/delete/${chat?._id}`
+        `/message/delete/${chat?._id}`
       );
       console.log(data)
       setMessages([])

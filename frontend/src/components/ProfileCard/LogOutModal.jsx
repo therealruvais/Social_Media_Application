@@ -1,7 +1,7 @@
 import React from "react";
 import "./logOutModal.css";
 import Modal from "react-modal";
-import axios from "axios";
+import axios from '../../axios-config'
 import { useNavigate } from "react-router-dom";
 
 
@@ -10,9 +10,9 @@ const LogOutModal = ({ logoutModal, setLogoutModal }) => {
 
     const logOut = async () => {
         const { data } = await axios.post(
-          `http://localhost:1900/api/user/logout`
+          `/user/logout`
         ).catch((err) => console.log('error logging Out', err))
-        console.log(data)
+        console.log(data.msg)
         return data
     }
 

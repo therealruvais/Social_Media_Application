@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import "./logoname.css";
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { UserDataContext } from "../../context/UserDataContext";
-
+import { Link } from "react-router-dom";
 
 const LogoName = () => {
   const { userData } = useContext(UserDataContext);

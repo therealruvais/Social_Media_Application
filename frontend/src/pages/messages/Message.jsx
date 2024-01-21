@@ -3,9 +3,8 @@ import "./message.css";
 import Users from "../../components/message/Users";
 import Messages from "../../components/message/Messages";
 import { io } from "socket.io-client";
-import axios from "axios";
+import axios from '../../axios-config'
 import { UserDataContext } from "../../context/UserDataContext";
-axios.defaults.withCredentials = true;
 
 const Message = () => {
   // const [userData, setUserData] = useState([]);
@@ -24,7 +23,7 @@ const Message = () => {
     const getChats = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:1900/api/chat/user`,
+          `/chat/user`,
           {
             withCredentials: true,
           }

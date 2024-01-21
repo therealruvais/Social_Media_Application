@@ -5,10 +5,8 @@ import PostCard from "../../components/postCard/PostCard";
 import { useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 
+import axios from "../../axios-config";
 
-import axios from "axios";
-
-axios.defaults.withCredentials = true;
 
 
 const ProfilePage = () => {
@@ -25,7 +23,7 @@ const ProfilePage = () => {
 
   const userPostdata = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/post/userpost/${username}`, {
+      .get(`/post/userpost/${username}`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
@@ -35,16 +33,15 @@ const ProfilePage = () => {
 
   const savedPost = async () => {
     const { data } = await axios.get(
-      `http://localhost:1900/api/post/getsaved/${username}`,{withCredentials:true,}
+      `/post/getsaved/${username}`,{withCredentials:true,}
     ).catch(err => console.log(`error fetching savd post `, err))
-    // console.log(data)
     setSavedPostData(data.savedPosts);
     return data
   }
 
    const profile = async () => {
      const { data } = await axios
-       .get(`http://localhost:1900/api/user/getuser/${username}`, {
+       .get(`/user/getuser/${username}`, {
          withCredentials: true,
        })
        .catch((err) => console.log(err));
@@ -54,7 +51,7 @@ const ProfilePage = () => {
 
   const user = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/user/verify`, {
+      .get(`/user/verify`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
@@ -113,6 +110,7 @@ const ProfilePage = () => {
       <div className="profileCard">
         {profileData.map((data) => (
           <ProfileCard
+            key={data._id}
             username={username}
             userPostData={userPostData}
             user={data}

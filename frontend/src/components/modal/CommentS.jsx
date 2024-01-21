@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { UserDataContext } from "../../context/UserDataContext";
-import axios from "axios";
+import axios from '../../axios-config'
 
 const CommentS = ({ data, getComments }) => {
   const { userData } = useContext(UserDataContext);
@@ -9,7 +9,7 @@ const CommentS = ({ data, getComments }) => {
 
   const deleteComment = async () => {
     const { data } = await axios
-      .delete(`http://localhost:1900/api/post/deleteC/${commentId}`)
+      .delete(`/post/deleteC/${commentId}`)
       .catch((err) => console.log(err));
     getComments();
     return data;
@@ -17,7 +17,7 @@ const CommentS = ({ data, getComments }) => {
 
   const onDelete = () => {
     setCommentId(data._id);
-    deleteComment().then((data) => console.log(data));
+    deleteComment()
   };
 
   return (
@@ -48,7 +48,6 @@ const CommentS = ({ data, getComments }) => {
         className="commentreply"
       >
         <p>2d</p>
-        <p>11 likes</p>
         <p>reply</p>
       </div>
     </div>

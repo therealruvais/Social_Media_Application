@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaComment } from "react-icons/fa";
 import PostModel from "./postModel";
-import axios from 'axios'
-axios.defaults.withCredentials = true;
+import axios from '../../axios-config'
 
 
 const ExplorePostList = ({ item, userData }) => {
@@ -12,7 +11,7 @@ const ExplorePostList = ({ item, userData }) => {
 
   const getComments = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/post/getcomments/${postId}`, {
+      .get(`/post/getcomments/${postId}`, {
         withCredentials: true,
       })
       .catch((err) => console.log(`error feching comment data`, err));

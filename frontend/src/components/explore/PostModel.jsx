@@ -7,7 +7,7 @@ import { LuShare2 } from "react-icons/lu";
 import "./postModel.css";
 import CommentS from "../modal/CommentS";
 
-import axios from 'axios'
+import axios  from "../../axios-config";
 
 const PostModel = ({
   item,
@@ -21,7 +21,7 @@ const PostModel = ({
   const [comments, setComments] = useState("");
   const postComment = async () => {
     const { data } = await axios
-      .post(`http://localhost:1900/api/post/comment/${postId}`, {
+      .post(`/post/comment/${postId}`, {
         content: comments,
       })
       .catch((err) => console.log(`error posting comment`, err));
@@ -29,7 +29,7 @@ const PostModel = ({
     return data;
   };
   const onPostClick = () => {
-    postComment().then((data) => console.log(data));
+    postComment()
     setComments("");
   };
 

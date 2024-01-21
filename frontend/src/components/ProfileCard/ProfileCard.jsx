@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "./profileCard.css";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
-import axios from "axios";
+import axios from '../../axios-config'
 import EditModal from "./EditModal";
 import LogOutModal from "./LogOutModal";
 import { useNavigate } from "react-router-dom";
-axios.defaults.withCredentials = true;
 
 const ProfileCard = ({
   username,
@@ -45,7 +44,7 @@ const ProfileCard = ({
   const sendImageUrlToBackend = async (imageUrl) => {
     try {
       const response = await axios.put(
-        `http://localhost:1900/api/user/updateimg`,
+        `/user/updateimg`,
         { imageUrl }
       );
       console.log("Image URL updated successfully:", response.data);
@@ -76,7 +75,7 @@ const ProfileCard = ({
 
   const users = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/user/verify`, {
+      .get(`/user/verify`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
@@ -85,7 +84,7 @@ const ProfileCard = ({
 
   const followUnfollow = async () => {
     const { data } = await axios
-      .put(`http://localhost:1900/api/user/followunfollow/${username}`)
+      .put(`/user/followunfollow/${username}`)
       .catch((err) => console.log("error following user", err));
     return data;
   };
@@ -123,7 +122,7 @@ const ProfileCard = ({
 
   const createChat = async () => {
     const { data } = await axios
-      .post(`http://localhost:1900/api/chat`, {
+      .post(`/chat`, {
         senderId: userData?._id,
         recieverId: recieverId,
       })

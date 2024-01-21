@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./editModal.css";
 import Modal from "react-modal";
-import axios from "axios";
-axios.defaults.withCredentials = true;
+import axios from '../../axios-config'
 
 const EditModal = ({ editModal, setEditModal, user, profile }) => {
   const [form, setForm] = useState({
@@ -18,7 +17,7 @@ const EditModal = ({ editModal, setEditModal, user, profile }) => {
 
   const newUser = async () => {
     const { data } = await axios
-      .patch(`http://localhost:1900/api/user/update`, {
+      .patch(`/user/update`, {
         name: form.name,
         username: form.username,
         bio: form.bio,

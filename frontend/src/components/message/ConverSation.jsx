@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"
-axios.defaults.withCredentials = true;
+import axios from '../../axios-config'
 
 const ConverSation = ({ data, userData, online }) => {
   const [chatUser, setChatUser] = useState(null);
@@ -10,14 +9,13 @@ const ConverSation = ({ data, userData, online }) => {
       try {
         const chatUserId = data?.members?.find((id) => id !== userData._id);
         const { data: chatUserData } = await axios.get(
-          `http://localhost:1900/api/user/getoneuser/${chatUserId}`,
+          `/user/getoneuser/${chatUserId}`,
           {
             withCredentials: true,
           }
         );
 
         setChatUser(chatUserData);
-        // console.log(chatUserData);
       } catch (error) {
         console.log(error);
       }

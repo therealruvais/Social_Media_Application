@@ -9,17 +9,8 @@ const Followers = () => {
 
   return (
     <div className="FollowersSec">
-      {/* <div className="search">
-        <input
-          type="text"
-          placeholder="Search Here"
-        />
-        <div className="s-icon">
-          <FaSearch />
-        </div>
-      </div> */}
       <LogoName/>
-      <div className="follocard">
+      {/* <div className="follocard">
         <div className="follocrdhead">
           <h4>Suggested For You</h4>
           <span>See All</span>
@@ -49,7 +40,7 @@ const Followers = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import "./createModal.css";
 import Modal from "react-modal";
 import { CiImageOn } from "react-icons/ci";
 import { PacmanLoader,ClipLoader } from "react-spinners";
-import axios from "axios";
+import axios from "../../axios-config";
 import { UserDataContext } from "../../context/UserDataContext";
 
 const CreateModal = ({ modalIsOpen, setModalIsOpen }) => {
@@ -45,7 +45,7 @@ const CreateModal = ({ modalIsOpen, setModalIsOpen }) => {
   const postToBackend = async () => {
       try {
          const { data } = await axios.post(
-           `http://localhost:1900/api/post/create`, {
+           `/post/create`, {
              desc,
              image
            }

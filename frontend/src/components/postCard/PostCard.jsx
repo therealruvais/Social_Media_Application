@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./postCard.css";
-import { CiGrid41, CiHashtag } from "react-icons/ci";
+import { CiGrid41 } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa";
-import { MdOutlineSlowMotionVideo } from "react-icons/md";
 import UserPost from "../userPost/UserPost";
 import SavedPage from "./SavedPage";
 

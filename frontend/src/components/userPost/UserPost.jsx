@@ -2,8 +2,6 @@ import React, {  useState } from "react";
 import "../postCard/postCard.css";
 import PostEditModal from "./PostEditModal";
 
-import axios from "axios";
-axios.defaults.withCredentials = true;
 
 const UserPost = ({ data, userPostdata,userData }) => {
   const [openPostModal, setOpenPostModal] = useState(false);

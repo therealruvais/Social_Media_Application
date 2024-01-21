@@ -7,9 +7,10 @@ import { LuShare2 } from "react-icons/lu";
 import { TextContext } from "../../context/TextContext";
 import CommentModal from "../modal/CommentModal";
 import { UserDataContext } from "../../context/UserDataContext";
-import axios from "axios";
 import ShareModel from "./ShareModel";
-axios.defaults.withCredentials = true;
+
+import axios from '../../axios-config'
+
 
 const Post = ({ item, posts, user }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -32,7 +33,7 @@ const Post = ({ item, posts, user }) => {
 
   const likeUnlike = async () => {
     const { data } = await axios
-      .put(`http://localhost:1900/api/post/like/${postId}`)
+      .put(`/post/like/${postId}`)
       .catch((err) => console.log("error fetching post data", err));
     posts();
     return data;
@@ -40,7 +41,7 @@ const Post = ({ item, posts, user }) => {
 
   const handlelikeClick = () => {
     setPostId(item._id);
-    likeUnlike().then((data) => console.log(data));
+    likeUnlike()
   };
 
   const getTimeDifference = () => {
@@ -71,7 +72,7 @@ const Post = ({ item, posts, user }) => {
 
   const getComments = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/post/getcomments/${postId}`, {
+      .get(`/post/getcomments/${postId}`, {
         withCredentials: true,
       })
       .catch((err) => console.log(`error feching comment data`, err));
@@ -81,7 +82,7 @@ const Post = ({ item, posts, user }) => {
 
   const savePost = async () => {
     const { data } = await axios
-      .put(`http://localhost:1900/api/post/save/${postId}`)
+      .put(`/post/save/${postId}`)
       .catch((err) => console.log("error saving post", err));
     user();
     posts();
@@ -90,12 +91,12 @@ const Post = ({ item, posts, user }) => {
 
   const onSaveClick = () => {
     setPostId(item._id);
-    savePost().then((data) => console.log(data));
+    savePost()
   };
 
   const postComment = async () => {
     const { data } = await axios
-      .post(`http://localhost:1900/api/post/comment/${postId}`, {
+      .post(`/post/comment/${postId}`, {
         content: comments,
       })
       .catch((err) => console.log(`error posting comment`, err));
@@ -108,7 +109,7 @@ const Post = ({ item, posts, user }) => {
   }, []);
 
   const onPostClick = () => {
-    postComment().then((data) => console.log(data));
+    postComment();
     setComments("");
   };
 

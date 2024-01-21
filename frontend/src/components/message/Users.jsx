@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import "../../pages/messages/message.css";
 import { FaRegEdit } from "react-icons/fa";
-import uimg from "../../socialmedia/avatar/avatar2.jpg";
-import axios from 'axios';
 import ConverSation from './ConverSation';
-axios.defaults.withCredentials = true
 
 const Users = ({ userData, chats, setCurrentChats, checkOnlineStatus }) => {
   return (

@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import "./home.css";
 import Post from "../../components/post/Post";
 import Followers from "../../components/followcard/Followers";
-import axios from "axios";
 import { UserDataContext } from "../../context/UserDataContext";
 import { HashLoader } from "react-spinners";
 import { NotifyContext } from "../../context/NotifyContext";
-axios.defaults.withCredentials = true;
+
+import axios from '../../axios-config'
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const Home = () => {
 
   const user = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/user/verify`, {
+      .get(`/user/verify`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
@@ -27,7 +27,7 @@ const Home = () => {
 
   const getNotify = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/notify/follow`, {
+      .get(`/notify/follow`, {
         withCredentials: true,
       })
       .catch((err) => console.log(`error  fetching data`, err));
@@ -37,7 +37,7 @@ const Home = () => {
 
   const posts = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/post/homepost`, {
+      .get(`/post/homepost`, {
         withCredentials: true,
       })
       .catch((err) => console.log("error fetching post data", err));
