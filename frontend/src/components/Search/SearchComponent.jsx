@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./searchComponent.css";
-import axios from "axios";
+import axios from '../../axios-config'
 import UsersCard from "./usersCard";
 import { Link } from "react-router-dom";
 
-axios.defaults.withCredentials = true;
 
 const SearchComponent = ({ handleSearchToggle }) => {
   const [searching, setSearching] = useState("");
@@ -15,7 +14,7 @@ const SearchComponent = ({ handleSearchToggle }) => {
 
   const searchData = async () => {
     const res = await axios
-      .get(`http://localhost:1900/api/user/search?username=${searching}`, {
+      .get(`/user/search?username=${searching}`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));

@@ -21,7 +21,7 @@ const Login = () => {
           password: form.password,
         }
       );
-      console.log(data);
+      console.log(data.msg);
       if (data.msg === "success") {
         navigate("/home");
       }

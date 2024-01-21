@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { MdDelete } from "react-icons/md";
-import axios from "axios";
+import axios from '../../axios-config'
 
 
 const Notify = ({ data, getNotify }) => {
@@ -8,7 +8,7 @@ const Notify = ({ data, getNotify }) => {
 
   const deleteNot = async () => {
     const { data } = await axios
-      .delete(`http://localhost:1900/api/notify/delete/${notifyId}`)
+      .delete(`/notify/delete/${notifyId}`)
           .catch((err) => console.log(err, `cannot delete notification`));
       getNotify();
     return data;

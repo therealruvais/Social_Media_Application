@@ -1,18 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./notification.css";
-import { MdDelete } from "react-icons/md";
 
-import axios from "axios";
-import { NotifyContext } from "../../context/NotifyContext";
+import axios from '../../axios-config'
 import Notify from "./Notify";
-axios.defaults.withCredentials = true;
 
 const Notification = () => {
   const [notifyData, setNotifydata] = useState([]);
 
   const getNotify = async () => {
     const { data } = await axios
-      .get(`http://localhost:1900/api/notify/follow`, {
+      .get(`/notify/follow`, {
         withCredentials: true,
       })
       .catch((err) => console.log(`error  fetching data`, err));
@@ -22,7 +19,7 @@ const Notification = () => {
 
   const clearAll = async () => {
     const { data } = await axios.delete(
-      `http://localhost:1900/api/notify/delete`
+      `/notify/delete`
     ).catch(err => console.log('error clearing messsag', err))
     getNotify();
     return data
@@ -33,7 +30,7 @@ const Notification = () => {
   }, []);
 
   const deleteAll = () => {
-    clearAll().then(data => console.log(data))
+    clearAll().then(data => console.log(data.msg))
   }
 
   return (
