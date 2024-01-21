@@ -63,7 +63,10 @@
   .navlink:hover,
   .navlink.active {
     box-shadow: none;
-    scale: 1;
-    
+    scale: 1.2;
+    background: none;
+  }
+  .nav-icon.active{
+    scale: 1.1;
   }
 }

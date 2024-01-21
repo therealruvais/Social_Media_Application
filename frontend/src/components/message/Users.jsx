@@ -7,8 +7,8 @@ const Users = ({ userData, chats, setCurrentChats, checkOnlineStatus }) => {
   return (
     <div className="Mesleft">
       <div className="Meshead">
-        <h3 style={{ fontSize: 26 }}>{userData.username}</h3>
-        <FaRegEdit style={{ fontSize: 26, cursor: "pointer" }} />
+        <h3>{userData.username}</h3>
+        <FaRegEdit className='edit-i' style={{ fontSize: 26, cursor: "pointer" }} />
       </div>
       <div className="Mesusers">
         {chats.map((chat) => (
@@ -16,9 +16,9 @@ const Users = ({ userData, chats, setCurrentChats, checkOnlineStatus }) => {
             className="muserim"
             style={{ cursor: "pointer" }}
             onClick={() => setCurrentChats(chat)}
+            key={chat?._id}
           >
             <ConverSation
-              key={chat._id}
               data={chat}
               userData={userData}
               online={checkOnlineStatus(chat)}

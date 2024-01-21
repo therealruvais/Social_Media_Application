@@ -44,3 +44,15 @@
   border-radius: 1rem;
   font-size: 1rem;
 }
+
+@media screen and (max-width:768px){
+  .ProfileEditModal{
+    width: 80vw;
+    height: 80vh;
+  }
+  .editForm{
+    width: 80vw;
+    height: 72vh;
+    font-size: 12px;
+  }
+}

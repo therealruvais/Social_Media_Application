@@ -138,6 +138,7 @@ const Messages = ({
           </div>
           <div className="MsInput">
             <InputEmoji
+              className='msginp'
               borderColor="#9999"
               value={newMessages}
               onChange={onHandleChange}

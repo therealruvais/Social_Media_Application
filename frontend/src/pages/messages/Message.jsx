@@ -50,7 +50,7 @@ const Message = () => {
   // sendmessage
   useEffect(() => {
     if (sendMessage !== null) {
-      console.log("Sending message:", sendMessage);
+      console.log("Sending message:");
       socket.current.emit("send-message", sendMessage);
     }
   }, [sendMessage]);
@@ -58,7 +58,7 @@ const Message = () => {
   //recieve message
   useEffect(() => {
     socket.current.on("received-message", (data) => {
-      console.log("Received recieve-message event:", data);
+      console.log("Received message");
       setRecieveMessage(data);
     });
   }, []);

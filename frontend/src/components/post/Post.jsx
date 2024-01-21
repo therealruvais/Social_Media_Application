@@ -170,7 +170,7 @@ const Post = ({ item, posts, user }) => {
               </div>
               {isShare && (
                 <ShareModel
-                  shareUrl={`http://localhost:5173/profile/${item.owner.username}`}
+                  shareUrl={`https://social-media-application-lyart.vercel.app/profile/${item.owner.username}`}
                 />
               )}
               <div

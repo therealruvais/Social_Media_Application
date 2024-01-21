@@ -30,3 +30,9 @@
     color: red;
     cursor: pointer;
 }
+
+@media screen and (max-width:768px) {
+    .LogOutModal {
+        width: 30vh ;
+    }
+}

@@ -157,3 +157,17 @@
   outline: none;
   resize: none;
 }
+
+@media screen and (max-width:768px) {
+  .modalForCreate{
+    width: 50vh;
+    height: 60vh;
+  }
+  .modalForCreate.active{
+    width: 30vh;
+    height: 60vh;
+  }
+  .create-btn > button{
+    font-size: 14px;
+  }
+}

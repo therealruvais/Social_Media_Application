@@ -31,8 +31,8 @@ const ConverSation = ({ data, userData, online }) => {
         alt=""
       />
       <div>
-        <p style={{ fontSize: 24, marginTop: 9 }}>{chatUser?.username}</p>
-        <span>{online ? "online" : "offline"}</span>
+        <p className="usersNames">{chatUser?.username}</p>
+        <span className="onof">{online ? "online" : "offline"}</span>
       </div>
      {online && <div className="online"></div>}
     </>

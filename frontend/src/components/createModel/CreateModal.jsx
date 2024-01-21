@@ -133,7 +133,6 @@ const CreateModal = ({ modalIsOpen, setModalIsOpen }) => {
                   >
                     ←
                   </div>
-                  <p style={{ fontSize: 18, fontWeight: 400 }}>crop</p>
                   <p
                     style={{
                       fontSize: 18,

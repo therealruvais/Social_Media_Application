@@ -8,4 +8,9 @@ const instance = axios.create({
   },
 });
 
+// const instance = axios.create({
+//   baseURL: "http://localhost:1900/api",
+//   withCredentials: true,
+// });
+
 export default instance;

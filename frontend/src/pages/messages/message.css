@@ -30,6 +30,10 @@
   padding: 10px;
 }
 
+.Meshead >h3{
+  font-size: 30;
+}
+
 .Mesusers {
   height: 90%;
 }
@@ -46,6 +50,10 @@
   border-radius: 50%;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.usersNames{
+  font-size: 26px;
+  margin-top: 9px;
 }
 
 .Mesright {
@@ -156,4 +164,49 @@
 .chatImg>img{
 width: 350px;
 height: 300px;
+}
+
+@media screen and (max-width:768px) {
+  .messageSection{
+    width: 100%;
+    height: 100vh;
+    margin-left: 2rem;
+  }
+ 
+  .Mesleft{
+    width: 25vw;
+    height: 100vh;
+  } 
+  .edit-i{
+    display: none;
+  }
+  .muserim > img{
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .usersNames{
+    font-size: 15px;
+  }
+  .onof{
+    font-size: 12px;
+  }
+  .Mesright {
+    width: 45vw;
+    height: 95vh;
+  }
+  .Mesrhead{
+    font-size: 14px;
+  }
+  .mbodyuserim > img{
+    width: 2rem;
+    height: 2rem;
+  }
+  .Msbody{
+    width: 100%;
+    font-size: 14px;
+  }
+  .chatImg>img{
+    width: 200px;
+    height: 200px;
+  }
 }
