@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaComment } from "react-icons/fa";
-import PostModel from "./postModel";
+import PostModel from "./PostModel";
 import axios from '../../axios-config'
 
 
