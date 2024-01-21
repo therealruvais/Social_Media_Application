@@ -110,3 +110,13 @@
   height: 40px;
   font-size: 20px;
 }
+@media screen and (max-width:768px) {
+  .PostEditModal {
+    width: 50vw;
+    height: 60vh;
+  }
+  .PostEditModal.active {
+    width: 25vw;
+    height: 45vh;
+  }
+}

@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "./profileCard.css";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
-import axios from '../../axios-config'
+import axios from 'axios'
+axios.defaults.withCredentials = true;
 import EditModal from "./EditModal";
 import LogOutModal from "./LogOutModal";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +45,7 @@ const ProfileCard = ({
   const sendImageUrlToBackend = async (imageUrl) => {
     try {
       const response = await axios.put(
-        `/user/updateimg`,
+        `https://pichub-server.onrender.com/api/user/updateimg`,
         { imageUrl }
       );
       console.log("Image URL updated successfully:", response.data);
@@ -75,7 +76,7 @@ const ProfileCard = ({
 
   const users = async () => {
     const { data } = await axios
-      .get(`/user/verify`, {
+      .get(`https://pichub-server.onrender.com/api/user/verify`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
@@ -84,7 +85,9 @@ const ProfileCard = ({
 
   const followUnfollow = async () => {
     const { data } = await axios
-      .put(`/user/followunfollow/${username}`)
+      .put(
+        `https://pichub-server.onrender.com/api/user/followunfollow/${username}`
+      )
       .catch((err) => console.log("error following user", err));
     return data;
   };
@@ -122,7 +125,7 @@ const ProfileCard = ({
 
   const createChat = async () => {
     const { data } = await axios
-      .post(`/chat`, {
+      .post(`https://pichub-server.onrender.com/api/chat`, {
         senderId: userData?._id,
         recieverId: recieverId,
       })

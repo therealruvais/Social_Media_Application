@@ -3,7 +3,7 @@ import "./createModal.css";
 import Modal from "react-modal";
 import { CiImageOn } from "react-icons/ci";
 import { PacmanLoader,ClipLoader } from "react-spinners";
-import axios from "../../axios-config";
+import axios from 'axios'
 import { UserDataContext } from "../../context/UserDataContext";
 
 const CreateModal = ({ modalIsOpen, setModalIsOpen }) => {
@@ -45,11 +45,12 @@ const CreateModal = ({ modalIsOpen, setModalIsOpen }) => {
   const postToBackend = async () => {
       try {
          const { data } = await axios.post(
-           `/post/create`, {
+           `https://pichub-server.onrender.com/api/post/create`,
+           {
              desc,
-             image
+             image,
            }
-        )
+         );
         console.log(data)
         return data
 

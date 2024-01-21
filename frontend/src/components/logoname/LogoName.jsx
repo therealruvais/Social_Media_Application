@@ -2,9 +2,23 @@ import React, { useContext } from "react";
 import "./logoname.css";
 import { ClipLoader } from "react-spinners";
 import { UserDataContext } from "../../context/UserDataContext";
-import { Link } from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
+import axios from "../../axios-config";
 
 const LogoName = () => {
+   const navigate = useNavigate();
+    const logOut = async () => {
+      const { data } = await axios
+        .post(`/user/logout`)
+        .catch((err) => console.log("error logging Out", err));
+      console.log(data.msg);
+      return data;
+    };
+
+    const handleLogout = () => {
+      logOut().then(() => navigate("/"));
+    };
+
   const { userData } = useContext(UserDataContext);
   if (!userData) {
     // Show a spinner while userData is loading
@@ -32,8 +46,8 @@ const LogoName = () => {
         </h4>
         <span>@{userData.username}</span>
       </div>
-      <div className="switchAc">
-        <p>Switch</p>
+      <div onClick={handleLogout} className="switchAc">
+        <p>log out</p>
       </div>
     </div>
   );
