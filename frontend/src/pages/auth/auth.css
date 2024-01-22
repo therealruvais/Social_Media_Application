@@ -139,6 +139,7 @@
   top: 50%;
   left: 90%;
   transform: translate(-50%, -50%);
+  color: black;
 }
 
 @keyframes pulse {
