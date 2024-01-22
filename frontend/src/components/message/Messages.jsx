@@ -3,6 +3,7 @@ import "../../pages/messages/message.css";
 import InputEmoji from "react-input-emoji";
 import { format } from "timeago.js";
 import axios from "../../axios-config";
+import { BsMessenger } from "react-icons/bs";
 
 
 const Messages = ({
@@ -116,12 +117,18 @@ const Messages = ({
                 alt="chat user"
               />
               <div>
-                <p style={{ fontWeight: "bold"}}>{chatUser?.username}</p>
+                <p style={{ fontWeight: "bold" }}>{chatUser?.username}</p>
               </div>
             </div>
             <div>
-              <p onClick={handleDelete} className="clearMsg" style={{color:'var(--color-blue)'}}>Clear all</p>
-           </div>
+              <p
+                onClick={handleDelete}
+                className="clearMsg"
+                style={{ color: "var(--color-blue)" }}
+              >
+                Clear all
+              </p>
+            </div>
           </div>
           <div className="Msbody">
             {messages.map((message) => (
@@ -138,7 +145,7 @@ const Messages = ({
           </div>
           <div className="MsInput">
             <InputEmoji
-              className='msginp'
+              className="msginp"
               borderColor="#9999"
               value={newMessages}
               onChange={onHandleChange}
@@ -148,11 +155,8 @@ const Messages = ({
         </>
       ) : (
         <div className="chatbox">
-          <div className="chatImg">
-            <img
-              src="https://res.cloudinary.com/ddwuuorpm/image/upload/v1705536795/message_f7egxr.png"
-              alt="message"
-            />
+          <div>
+            <BsMessenger className="chatImg" />
           </div>
           <span style={{ alignSelf: "center", fontWeight: "bold" }}>
             Tap on a chat to start conversation...

@@ -36,6 +36,7 @@
   border: none;
   outline: none;
   background: transparent;
+  color: var(--color-dark);
 }
 
 .Simg {
@@ -46,4 +47,10 @@
 .searchLink{
   text-decoration: none;
   color: var(--color-dark);
+}
+
+@media screen and (max-width:768px) {
+  .searchC{
+    font-size: 14px;
+  }
 }

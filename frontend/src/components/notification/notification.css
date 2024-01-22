@@ -33,3 +33,8 @@
   gap: 5px;
   align-items: center;
 }
+@media screen and (max-width:768px){
+  .notifyC{
+    font-size: 14px;
+  }
+}

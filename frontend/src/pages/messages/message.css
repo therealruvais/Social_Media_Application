@@ -161,9 +161,10 @@
   justify-content: center;
 }
 
-.chatImg>img{
-width: 350px;
-height: 300px;
+.chatImg{
+width: 200px;
+height: 200px;
+color: var(--color-dark);
 }
 
 @media screen and (max-width:768px) {

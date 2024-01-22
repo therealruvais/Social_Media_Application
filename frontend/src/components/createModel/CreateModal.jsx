@@ -82,6 +82,7 @@ const CreateModal = ({ modalIsOpen, setModalIsOpen }) => {
 
   return (
     <Modal
+      style={{ overlay: { backgroundColor: "#2e2b2bc7", zIndex: 2 } }}
       isOpen={modalIsOpen}
       onRequestClose={() => setModalIsOpen(false)}
       className={`modalForCreate ${next ? undefined : "active"}`}

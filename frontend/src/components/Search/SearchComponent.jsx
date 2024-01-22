@@ -60,7 +60,7 @@ const SearchComponent = ({ handleSearchToggle }) => {
           />
           <p
             onClick={handleClose}
-            style={{ color: "#9999", cursor: "pointer" }}
+            style={{ color: "var(--color-gray)", cursor: "pointer" }}
           >
             X
           </p>

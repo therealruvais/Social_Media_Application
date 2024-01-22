@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import SideBar from "./pages/sidebar/SideBar";
 import Home from "./pages/home/Home";
@@ -10,6 +10,7 @@ import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import { PacmanLoader } from "react-spinners";
 import ProfilePage from "./pages/profile/Profile";
+import { DarkContext } from "./context/DarkmodeContext";
 
 const App = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const App = () => {
     location.pathname === "/" || location.pathname === "/signup";
   
   const [loading, setLoading] = useState(true);
+  const {dark} = useContext(DarkContext)
 
   useEffect(() => {
     
@@ -40,7 +42,7 @@ const App = () => {
   }
   
   return (
-    <div className="App">
+    <div className={`App ${dark?'darktheme':""}`}>
       {!hideSideBar && <SideBar />}
       <TextProvider>
         <div className="Pages">

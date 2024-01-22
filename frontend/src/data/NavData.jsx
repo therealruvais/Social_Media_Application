@@ -1,6 +1,6 @@
 import { FaHome } from "react-icons/fa";
 import { MdExplore } from "react-icons/md";
-import { IoMdNotifications } from "react-icons/io";
+import { IoMdNotifications, IoIosColorPalette } from "react-icons/io";
 import { BsMessenger } from "react-icons/bs";
 import { TbSquarePlus } from "react-icons/tb";
  import { FaSearch } from "react-icons/fa";
@@ -52,12 +52,24 @@ export const NavData = [
     icon: <TbSquarePlus />,
     active: false,
   },
-  
+
   {
     _id: 7,
     target: "/profile/zoya",
     name: "Profile",
-    icon: <img src={profile} alt="" />,
+    icon: (
+      <img
+        src={profile}
+        alt=""
+      />
+    ),
+    active: false,
+  },
+  {
+    _id: 8,
+    target: "#",
+    name: "Theme",
+    icon: <IoIosColorPalette />,
     active: false,
   },
 ];

@@ -47,6 +47,7 @@ const PostEditModal = ({
 
   return (
     <Modal
+      style={{ overlay: { backgroundColor: "#2e2b2bc7", zIndex: 2 } }}
       className={`PostEditModal ${edit ? undefined : "active"} `}
       isOpen={openPostModal}
       onRequestClose={() => setOpenPostModal(false)}

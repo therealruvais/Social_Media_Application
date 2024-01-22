@@ -6,10 +6,9 @@ import Modal from "react-modal";
 import UserProvider from "./context/UserDataContext.jsx";
 import PostProvider from "./context/PostContext.jsx";
 import NotifyProvider from "./context/NotifyContext.jsx";
+import DarkmodeProvider from "./context/DarkmodeContext.jsx";
 
 Modal.setAppElement("#root");
-Modal.defaultStyles.overlay.backgroundColor = "rgba(0, 0, 0, 0.349)";
-Modal.defaultStyles.overlay.zIndex = 2;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <UserProvider>
         <PostProvider>
           <NotifyProvider>
-            <App />
+            <DarkmodeProvider>
+              <App />
+            </DarkmodeProvider>
           </NotifyProvider>
         </PostProvider>
       </UserProvider>

@@ -65,6 +65,7 @@ const PostModel = ({
   return (
     <>
       <Modal
+        style={{ overlay: { backgroundColor: "#2e2b2bc7", zIndex: 2 } }}
         isOpen={openModal}
         onRequestClose={() => setOpenModal(false)}
         className={"modalForPost"}

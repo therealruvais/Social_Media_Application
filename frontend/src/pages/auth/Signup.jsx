@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./auth.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from '../../axios-config'
 
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+  
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -83,9 +86,20 @@ const Signup = () => {
         </label>
 
         <label>
+          {visible ? (
+            <FaEye
+              className="eye"
+              onClick={() => setVisible(false)}
+            />
+          ) : (
+            <FaEyeSlash
+              className="eye"
+              onClick={() => setVisible(true)}
+            />
+          )}
           <input
             required
-            type="password"
+            type={visible ? "text" : "password"}
             className="input"
             name="password"
             value={form.password}

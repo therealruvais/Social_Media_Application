@@ -40,6 +40,7 @@ const EditModal = ({ editModal, setEditModal, user, profile }) => {
 
   return (
     <Modal
+      style={{ overlay: { backgroundColor: "#2e2b2bc7", zIndex: 2 } }}
       className={"ProfileEditModal"}
       isOpen={editModal}
       onRequestClose={() => setEditModal(false)}

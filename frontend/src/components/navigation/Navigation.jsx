@@ -4,8 +4,9 @@ import "./navigation.css";
 import NavlistItem from "./NavlistItem";
 import CreateModal from "../createModel/CreateModal";
 
-import axios from '../../axios-config'
+import axios from "../../axios-config";
 import { NotifyContext } from "../../context/NotifyContext";
+import ThemeModal from "../Theme/ThemeModal";
 
 const Navigation = ({
   handleSearchToggle,
@@ -20,6 +21,7 @@ const Navigation = ({
 }) => {
   const [nav, setNav] = useState(NavData);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [themeModal, setThemeModal] = useState(false);
   const [notifyCount, setNotifyCount] = useState(0);
 
   const { notifyData } = useContext(NotifyContext);
@@ -34,6 +36,9 @@ const Navigation = ({
 
   const handleModalToggle = () => {
     setModalIsOpen(true);
+  };
+  const handleThemeModal = () => {
+    setThemeModal(true);
   };
   const handleNavActive = (id) => {
     const newNavData = nav.map((nav) => {
@@ -73,11 +78,9 @@ const Navigation = ({
     updateNavData();
   }, []);
 
-  
-
   const numberOfnotification = () => {
-     const unreadNotifications = notifyData.filter((item) => !item.isRead);
-     setNotifyCount(unreadNotifications.length);
+    const unreadNotifications = notifyData.filter((item) => !item.isRead);
+    setNotifyCount(unreadNotifications.length);
   };
 
   const handleReadClick = () => {
@@ -98,6 +101,7 @@ const Navigation = ({
             item={item}
             navonClick={handleNavActive}
             handleModalToggle={handleModalToggle}
+            handleThemeModal={handleThemeModal}
             handleSearchToggle={handleSearchToggle}
             setSearch={setSearch}
             search={search}
@@ -115,6 +119,10 @@ const Navigation = ({
       <CreateModal
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
+      />
+      <ThemeModal
+        themeModal={themeModal}
+        setThemeModal={setThemeModal}
       />
     </div>
   );

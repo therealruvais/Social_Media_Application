@@ -90,6 +90,8 @@
   padding: 0 10px;
   border: none;
   outline: none;
+  background: transparent;
+  color: var(--color-dark);
 }
 .showMore {
   font-size: 10px;

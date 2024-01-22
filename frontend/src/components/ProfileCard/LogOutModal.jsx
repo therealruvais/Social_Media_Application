@@ -22,16 +22,17 @@ const LogOutModal = ({ logoutModal, setLogoutModal }) => {
 
   return (
     <Modal
+      style={{ overlay: { backgroundColor: "#2e2b2bc7", zIndex: 2 } }}
       className={"LogOutModal"}
       isOpen={logoutModal}
       onRequestClose={() => setLogoutModal(false)}
     >
       <div className="logMC">
         <div>
-          <button onClick={handleLogout} >Log Out</button>
+          <button onClick={handleLogout}>Log Out</button>
         </div>
         <div>
-          <button onClick={() =>setLogoutModal(false)} >Cancel</button>
+          <button onClick={() => setLogoutModal(false)}>Cancel</button>
         </div>
       </div>
     </Modal>

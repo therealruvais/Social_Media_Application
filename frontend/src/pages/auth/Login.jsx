@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "./auth.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../axios-config";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+
   const [form, setForm] = useState({ email: "", password: "" });
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -50,16 +53,29 @@ const Login = () => {
           <span>Email</span>
         </label>
         <label>
+          {visible ? (
+            <FaEye
+              className="eye"
+              onClick={() => setVisible(false)}
+            />
+          ) : (
+            <FaEyeSlash
+              className="eye"
+              onClick={() => setVisible(true)}
+            />
+          )}
           <input
             required
-            type="password"
+            type={visible ? "text" : "password"}
             className="input"
             name="password"
             value={form.password}
             onChange={handleChange}
           />
+
           <span>Password</span>
         </label>
+
         <button className="submit">Submit</button>
         <p className="signin">
           Don't have an acount ? <Link to="/signup">Signup</Link>

@@ -5,6 +5,7 @@
 }
 body{
   overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
 }
 :root {
   --color-dark: hsl(252, 30%, 17%);
@@ -17,6 +18,16 @@ body{
   --color-black: hsl(252, 30%, 10%);
   --color-blue:hsl(204, 100%, 45%);
 }
+
+.darktheme {
+  --color-dark:hsl(0, 0%, 100%);
+  --color-light:hsl(0, 0%, 15%);
+  --color-gray: hsl(0, 0%, 100%);
+  --color-secondary:hsl(0, 0%, 0%);
+  --color-black:hsl(0, 0%, 100%);
+}
+
+
 .App {
   position: relative;
   inset: 0;
@@ -27,6 +38,10 @@ body{
   display: flex;
   gap: 1rem;
 }
+
+
+
+
 
 .spinner-container{
   width: 100vw;

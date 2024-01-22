@@ -30,13 +30,15 @@ const CommentModal = ({
     setComments("");
   };
 
+ 
   
   return (
     <>
       <Modal
+        style={{overlay:{backgroundColor:"#2e2b2bc7",zIndex:2}}}
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        className={"modalForPost"}
+        className={"modalForC"}
       >
         <div className="modalLeft">
           <img

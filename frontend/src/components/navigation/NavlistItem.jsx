@@ -16,6 +16,7 @@ const NavlistItem = ({
   message,
   setMessage,
   handleReadClick,
+  handleThemeModal,
 }) => {
   const handleClick = () => {
     if (item._id === 5 && handleModalToggle) {
@@ -51,6 +52,12 @@ const NavlistItem = ({
       setNotify(false);
     }
     if (item._id === 7) {
+      setSearch(false);
+      setNotify(false);
+      setMessage(false);
+    }
+    if (item._id === 8 && handleThemeModal) {
+      handleThemeModal()
       setSearch(false);
       setNotify(false);
       setMessage(false);
