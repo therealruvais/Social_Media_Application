@@ -45,7 +45,7 @@ const ProfileCard = ({
   const sendImageUrlToBackend = async (imageUrl) => {
     try {
       const response = await axios.put(
-        `https://pichub-server.onrender.com/api/user/updateimg`,
+        `https://encouraging-erin-neckerchief.cyclic.app/api/user/updateimg`,
         { imageUrl }
       );
       console.log("Image URL updated successfully:", response.data);
@@ -76,7 +76,7 @@ const ProfileCard = ({
 
   const users = async () => {
     const { data } = await axios
-      .get(`https://pichub-server.onrender.com/api/user/verify`, {
+      .get(`https://encouraging-erin-neckerchief.cyclic.app/api/user/verify`, {
         withCredentials: true,
       })
       .catch((err) => console.log(err));
@@ -86,7 +86,7 @@ const ProfileCard = ({
   const followUnfollow = async () => {
     const { data } = await axios
       .put(
-        `https://pichub-server.onrender.com/api/user/followunfollow/${username}`
+        `https://encouraging-erin-neckerchief.cyclic.app/api/user/followunfollow/${username}`
       )
       .catch((err) => console.log("error following user", err));
     return data;
@@ -125,7 +125,7 @@ const ProfileCard = ({
 
   const createChat = async () => {
     const { data } = await axios
-      .post(`https://pichub-server.onrender.com/api/chat`, {
+      .post(`https://encouraging-erin-neckerchief.cyclic.app/api/chat`, {
         senderId: userData?._id,
         recieverId: recieverId,
       })

@@ -34,11 +34,12 @@ const loginUser = async (req, res) => {
     expiresIn: "1d",
   });
   if (req.cookies[`${findUser._id}`]) {
+     res.clearCookie(`${findUser.id}`);
     req.cookies[`${findUser._id}`] = "";
   }
   res.cookie(String(findUser._id), userToken, {
     path: "/",
-    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 1),
     httpOnly: true,
     sameSite: "lax",
   });
