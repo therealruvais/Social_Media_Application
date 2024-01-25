@@ -45,7 +45,7 @@ const CreateModal = ({ modalIsOpen, setModalIsOpen }) => {
   const postToBackend = async () => {
       try {
          const { data } = await axios.post(
-           `https://encouraging-erin-neckerchief.cyclic.app/api/post/create`,
+           `https://pichub-server.onrender.com/api/post/create`,
            {
              desc,
              image,
